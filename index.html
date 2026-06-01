@@ -342,7 +342,7 @@
 <!-- ALERT BAR -->
 <div class="alert-bar">
   <span class="alert-label">&#9888; Alerts</span>
-  <span class="flag-pill flag-amber">&#128201; Revenue WoW -5.02% (threshold: -5%)</span>
+  <span class="flag-pill flag-red">&#128201; Revenue WoW -8.65% (threshold: -5%)</span>
   <span class="flag-pill flag-amber">&#128065; Click Rate 0.50% — below 1.20% threshold (broad May 29 send)</span>
 </div>
 
@@ -366,28 +366,28 @@
 <!-- SUMMARY STRIP -->
 <div class="summary-strip">
   <div class="summary-cell">
-    <div class="label">Total Revenue (event-time)</div>
-    <div class="value">$17,910</div>
-    <div><span class="delta amber">&#9660; -5.02%</span></div>
-    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">PW $18,857</div>
+    <div class="label">Total Revenue (Klaviyo UI)</div>
+    <div class="value">$19,066</div>
+    <div><span class="delta down">&#9660; -8.65%</span></div>
+    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">PW $20,872</div>
   </div>
   <div class="summary-cell">
     <div class="label">Total Orders</div>
-    <div class="value">157</div>
-    <div><span class="delta down">&#9660; -6.55%</span></div>
-    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">PW 168</div>
+    <div class="value">170</div>
+    <div><span class="delta down">&#9660; -7.61%</span></div>
+    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">PW 184</div>
   </div>
   <div class="summary-cell">
     <div class="label">Avg Order Value</div>
-    <div class="value">$114.08</div>
-    <div><span class="delta up">&#9650; +1.63%</span></div>
-    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">PW $112.25</div>
+    <div class="value">$112.16</div>
+    <div><span class="delta down">&#9660; -1.13%</span></div>
+    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">PW $113.44</div>
   </div>
   <div class="summary-cell highlighted">
     <div class="label">Total Klaviyo Attributed</div>
-    <div class="value">$7,547</div>
-    <div><span style="font-size:11px;color:var(--muted);">event-time + send-date attribution</span></div>
-    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">Campaigns $1,734 · Flows $5,813</div>
+    <div class="value">$7,629</div>
+    <div><span style="font-size:11px;color:var(--muted);">Klaviyo UI · 40.0% of total</span></div>
+    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">Campaigns $1,734 · Flows $5,895</div>
   </div>
   <div class="summary-cell">
     <div class="label">Campaign Revenue</div>
@@ -397,9 +397,9 @@
   </div>
   <div class="summary-cell">
     <div class="label">Flow Revenue</div>
-    <div class="value">$5,813</div>
-    <div><span class="delta up">&#9650; +6.86%</span></div>
-    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">PW $5,440 · event-time</div>
+    <div class="value">$5,895</div>
+    <div><span class="delta down">&#9660; -2.96%</span></div>
+    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">PW $6,075 · event-time</div>
   </div>
 </div>
 
@@ -427,10 +427,10 @@
     </div>
     <div class="metric-card">
       <div class="card-label">Flow AOV</div>
-      <div class="card-value">$116.26</div>
+      <div class="card-value">$117.75</div>
       <div class="card-footer">
-        <span class="delta up">&#9650; +4.72%</span>
-        <span style="font-size:11px;color:var(--muted);">PW $111.01</span>
+        <span class="delta up">&#9650; +6.60%</span>
+        <span style="font-size:11px;color:var(--muted);">PW $110.45</span>
       </div>
     </div>
     <div class="metric-card">
@@ -472,7 +472,7 @@
     <canvas id="lineChart" height="90"></canvas>
     <div class="chart-note">
       <strong style="color:var(--blue);">— CW (filled area)</strong> &nbsp; <strong style="color:var(--orange);">- - - PW (dashed)</strong> &nbsp;|&nbsp;
-      Event-time data: revenue counted on the day the purchase occurred. CW peak was Thursday May 28 at $3,662. PW peaked Friday May 22 at $4,138 — Memorial Day sale push.
+      Event-time data (UTC daily buckets): revenue counted on the day the purchase occurred. CW peak was Tuesday May 26 at $3,774. PW peaked Friday May 22 at $3,827 — Memorial Day sale push. YoY total revenue up +97% (Klaviyo UI).
     </div>
   </div>
 
@@ -685,33 +685,33 @@
   <div class="cards-grid cards-4">
     <div class="metric-card">
       <div class="card-label">Flow Revenue CW</div>
-      <div class="card-value">$5,812.83</div>
+      <div class="card-value">$5,894.91</div>
       <div class="card-footer">
-        <span class="delta up">&#9650; +6.86%</span>
-        <span style="font-size:11px;color:var(--muted);">PW $5,439.73</span>
+        <span class="delta down">&#9660; -2.96%</span>
+        <span style="font-size:11px;color:var(--muted);">PW $6,074.75</span>
       </div>
     </div>
     <div class="metric-card">
       <div class="card-label">Flow Orders CW</div>
-      <div class="card-value">50</div>
+      <div class="card-value">54</div>
       <div class="card-footer">
-        <span class="delta up">&#9650; +2.04%</span>
-        <span style="font-size:11px;color:var(--muted);">PW 49</span>
+        <span class="delta down">&#9660; -1.82%</span>
+        <span style="font-size:11px;color:var(--muted);">PW 55</span>
       </div>
     </div>
     <div class="metric-card">
       <div class="card-label">Flow AOV CW</div>
-      <div class="card-value">$116.26</div>
+      <div class="card-value">$117.75</div>
       <div class="card-footer">
-        <span class="delta up">&#9650; +4.72%</span>
-        <span style="font-size:11px;color:var(--muted);">PW $111.01</span>
+        <span class="delta up">&#9650; +6.60%</span>
+        <span style="font-size:11px;color:var(--muted);">PW $110.45</span>
       </div>
     </div>
     <div class="metric-card">
       <div class="card-label">Flows % of Attributed</div>
-      <div class="card-value">77.0%</div>
+      <div class="card-value">77.3%</div>
       <div class="card-footer">
-        <span style="font-size:11px;color:var(--muted);">Campaigns: 23.0%</span>
+        <span style="font-size:11px;color:var(--muted);">Campaigns: 22.7%</span>
       </div>
     </div>
   </div>
@@ -736,12 +736,12 @@
         <div style="font-weight:600;font-size:13px;">Welcome Series 15%</div>
         <span class="pill pill-email">Email</span>
       </div>
-      <div class="mono" style="color:var(--blue);">$4,158.69</div>
-      <div class="mono" style="color:var(--orange);">$4,041.82</div>
-      <div><span class="delta up">&#9650; +2.9%</span></div>
+      <div class="mono" style="color:var(--blue);">$4,298.09</div>
+      <div class="mono" style="color:var(--orange);">$4,676.84</div>
+      <div><span class="delta down">&#9660; -8.1%</span></div>
       <div class="progress-bars">
-        <div class="progress-track"><div class="progress-fill-blue" style="width:100%;"></div></div>
-        <div class="progress-track"><div class="progress-fill-orange" style="width:97.2%;"></div></div>
+        <div class="progress-track"><div class="progress-fill-blue" style="width:91.9%;"></div></div>
+        <div class="progress-track"><div class="progress-fill-orange" style="width:100%;"></div></div>
       </div>
     </div>
 
@@ -750,12 +750,12 @@
         <div style="font-weight:600;font-size:13px;">Cart Abandonment</div>
         <span class="pill pill-email">Email</span>
       </div>
-      <div class="mono" style="color:var(--blue);">$763.78</div>
+      <div class="mono" style="color:var(--blue);">$1,036.98</div>
       <div class="mono" style="color:var(--orange);">$409.61</div>
-      <div><span class="delta up">&#9650; +86.5%</span></div>
+      <div><span class="delta up">&#9650; +153.2%</span></div>
       <div class="progress-bars">
         <div class="progress-track"><div class="progress-fill-blue" style="width:100%;"></div></div>
-        <div class="progress-track"><div class="progress-fill-orange" style="width:53.6%;"></div></div>
+        <div class="progress-track"><div class="progress-fill-orange" style="width:39.5%;"></div></div>
       </div>
     </div>
 
@@ -835,18 +835,18 @@
         <div style="font-weight:600;font-size:13px;">Site Abandonment</div>
         <span class="pill pill-email">Email</span>
       </div>
-      <div class="mono" style="color:var(--muted);">—</div>
+      <div class="mono" style="color:var(--blue);">$133.15</div>
       <div class="mono" style="color:var(--orange);">$147.14</div>
-      <div><span style="font-size:11px;color:var(--muted);">PW only</span></div>
+      <div><span class="delta down">&#9660; -9.5%</span></div>
       <div class="progress-bars">
-        <div class="progress-track"><div class="progress-fill-blue" style="width:0%;"></div></div>
+        <div class="progress-track"><div class="progress-fill-blue" style="width:90.5%;"></div></div>
         <div class="progress-track"><div class="progress-fill-orange" style="width:100%;"></div></div>
       </div>
     </div>
   </div>
 
   <div class="insight-note">
-    <strong>Insight:</strong> Flow revenue is up +6.86% WoW ($5,813 vs $5,440) with strong recovery in Cart Abandonment (+86.5%) and Checkout Abandonment (+135.1%) — both benefiting from the Memorial Day campaign driving traffic and checkout activity in PW. Welcome Series remains the anchor at $4,159 (71.5% of flow revenue), steady at +2.9% WoW. Cross Sell dropped -70.9% this week — volume-dependent on the number of post-purchase triggers; monitor next week before acting. Out For Delivery added $226 (up +214%) as transactional emails catch up with recent orders. Site Abandonment revenue shifted to zero this week — not alarming for one week but worth watching. Re-engagement contributed its first $40 this week — a healthy sign that even the 30D unengaged segment can still convert.
+    <strong>Insight:</strong> Flow revenue is down -2.96% WoW ($5,895 CW vs $6,075 PW — UI figures). Welcome Series slipped -8.1% ($4,298 vs $4,677) — still the top anchor by a wide margin but worth watching. Cart Abandonment surged +153.2% ($1,037 vs $410) — Memorial Day traffic in PW created more abandoned carts that converted this week. Checkout Abandonment up +135.1% for the same reason. Cross Sell dropped -70.9% ($99 vs $340) — volume-dependent on the recent-buyer cohort; one slow week is not a signal. Site Abandonment is back at $133 CW vs $147 PW (-9.5%) — stable. Re-engagement contributed $40 for the second consecutive week. Out For Delivery added $226 (+214%). Note: per-flow figures use metric aggregates (event-time); CW total headline ($5,895) is from Klaviyo UI which uses a different attribution engine.
   </div>
 </div>
 
@@ -1152,7 +1152,7 @@ new Chart(lineCtx, {
     datasets: [
       {
         label: 'CW Revenue',
-        data: [2606.82, 2109.33, 3039.06, 3662.32, 2818.73, 1393.91, 2279.65],
+        data: [2992.92, 3774.08, 2558.83, 3080.53, 2481.65, 1867.42, 2527.82],
         borderColor: '#41b9f8',
         backgroundColor: 'rgba(65,185,248,0.12)',
         borderWidth: 2.5,
@@ -1163,7 +1163,7 @@ new Chart(lineCtx, {
       },
       {
         label: 'PW Revenue',
-        data: [1355.56, 2010.74, 2765.79, 3386.41, 4137.58, 2786.51, 2414.76],
+        data: [2230.89, 2201.25, 2922.49, 3686.19, 3827.10, 3040.02, 2964.15],
         borderColor: '#ff8c42',
         borderDash: [6, 3],
         borderWidth: 2,
@@ -1205,21 +1205,21 @@ new Chart(stackedCtx, {
       {
         type: 'bar',
         label: 'CW Flow Revenue',
-        data: [656.97, 841.68, 1299.67, 1054.43, 787.80, 448.30, 723.98],
+        data: [656.97, 1762.33, 647.03, 973.76, 907.61, 416.25, 994.63],
         backgroundColor: 'rgba(167,139,250,0.7)',
         stack: 'cw',
       },
       {
         type: 'bar',
         label: 'CW Organic + Campaign',
-        data: [1949.85, 1267.65, 1739.39, 2607.89, 2030.93, 945.61, 1555.67],
+        data: [2335.95, 2011.75, 1911.80, 2106.77, 1574.04, 1451.17, 1533.19],
         backgroundColor: 'rgba(65,185,248,0.7)',
         stack: 'cw',
       },
       {
         type: 'line',
         label: 'PW Total (event-time)',
-        data: [1355.56, 2010.74, 2765.79, 3386.41, 4137.58, 2786.51, 2414.76],
+        data: [2230.89, 2201.25, 2922.49, 3686.19, 3827.10, 3040.02, 2964.15],
         borderColor: '#ff8c42',
         borderDash: [6,3],
         borderWidth: 2,
@@ -1259,3 +1259,4 @@ new Chart(stackedCtx, {
 </script>
 </body>
 </html>
+     
