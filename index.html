@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WAMA · Week-over-Week Dashboard</title>
+<title>WAMA &middot; Week-over-Week Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -131,6 +131,11 @@
   .unsub-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
   .unsub-stat .us-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
   .unsub-stat .us-value { font-family: 'Fira Code', monospace; font-size: 16px; color: var(--text); }
+  .data-quality-note { background: rgba(245,197,66,0.05); border: 1px solid rgba(245,197,66,0.25); border-radius: 10px; padding: 14px 16px; font-size: 12px; color: var(--amber); line-height: 1.7; margin-bottom: 16px; }
+  .quiet-card { background: rgba(65,185,248,0.04); border: 1px solid rgba(65,185,248,0.2); border-radius: 12px; padding: 28px; text-align: center; margin-bottom: 20px; }
+  .quiet-card .quiet-icon { font-size: 36px; margin-bottom: 12px; }
+  .quiet-card h3 { font-size: 15px; font-weight: 600; color: var(--blue); margin-bottom: 8px; }
+  .quiet-card p { font-size: 13px; color: var(--muted); max-width: 480px; margin: 0 auto; line-height: 1.6; }
   @media print { body { background: white; color: #111; } .alert-bar, .tab-nav, .export-btn { display: none !important; } .tab-pane { display: block !important; page-break-after: always; } @page { size: A4 landscape; margin: 15mm; } }
 </style>
 </head>
@@ -139,12 +144,12 @@
 <!-- ALERT BAR -->
 <div class="alert-bar">
   <span class="alert-label">&#9888; Alerts</span>
-  <span class="flag-pill flag-green">&#9650; Revenue +40.1% WoW ($23,405 vs $16,711)</span>
-  <span class="flag-pill flag-green">&#9650; Post Purchase 2 surged +299.7% WoW ($1,601 vs $401)</span>
-  <span class="flag-pill flag-green">&#9650; Cart Abandonment recovered: $629 CW vs $112 PW</span>
-  <span class="flag-pill flag-red">&#128683; Cross Sell $0 this week (vs $592 PW) &#8212; investigate immediately</span>
-  <span class="flag-pill flag-amber">&#128065; Click Rate 0.51% &#8212; below 1.20% threshold</span>
-  <span class="flag-pill flag-blue">&#128276; UndrDog flooded 9 emails (Blue Legacy drop closed) &#8212; counter with always-in-stock angle</span>
+  <span class="flag-pill flag-green">&#9650; Revenue +0.9% WoW ($23,625 vs $23,405)</span>
+  <span class="flag-pill flag-red">&#9660; Campaign Revenue -48.4% WoW (2 sends vs 4 sends)</span>
+  <span class="flag-pill flag-red">&#9888; Unsub Rate 0.33% &#8212; above 0.30% threshold</span>
+  <span class="flag-pill flag-amber">&#9650; Click Rate 1.14% &#8212; improved from 0.48% PW (target: 1.20%)</span>
+  <span class="flag-pill flag-red">&#9660; Engaged 30D declined: 12,341 vs 12,432 PW (-91)</span>
+  <span class="flag-pill flag-blue">&#128276; Both NADS and Undrdog went silent this week &#8212; clean window for WAMA</span>
 </div>
 
 <!-- HEADER -->
@@ -154,51 +159,51 @@
     <button class="export-btn" onclick="window.print()">&#8659; Export PDF</button>
   </div>
   <div class="header-meta">
-    <span class="badge cw">CW: Mon Jun 15 - Sun Jun 21, 2026</span>
-    <span class="badge pw">PW: Mon Jun 8 - Sun Jun 14, 2026</span>
-    <span class="badge">&#128231; 4 email sends (CW)</span>
+    <span class="badge cw">CW: Mon Jun 22 &#8211; Sun Jun 28, 2026</span>
+    <span class="badge pw">PW: Mon Jun 15 &#8211; Sun Jun 21, 2026</span>
+    <span class="badge">&#128231; 2 email sends (CW)</span>
     <span class="badge">&#128241; SMS: inactive</span>
-    <span class="badge mono">Generated: Mon Jun 22, 2026 &#8212; PHT</span>
+    <span class="badge mono">Generated: Mon Jun 29, 2026 &#8212; PHT</span>
   </div>
 </div>
 
 <!-- SUMMARY STRIP -->
 <div class="summary-strip">
   <div class="summary-cell">
-    <div class="label">Total Revenue (event-time)</div>
-    <div class="value">$23,405</div>
-    <div><span class="delta up">&#9650; +40.1%</span></div>
-    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">PW $16,711</div>
+    <div class="label">Total Revenue (Placed Order)</div>
+    <div class="value">$23,625</div>
+    <div><span class="delta up">&#9650; +0.9%</span></div>
+    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">PW $23,405</div>
   </div>
   <div class="summary-cell">
     <div class="label">Total Orders</div>
-    <div class="value">202</div>
-    <div><span class="delta up">&#9650; +27.0%</span></div>
-    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">PW 159</div>
+    <div class="value">210</div>
+    <div><span class="delta up">&#9650; +4.0%</span></div>
+    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">PW 202</div>
   </div>
   <div class="summary-cell">
     <div class="label">Avg Order Value</div>
-    <div class="value">$115.87</div>
-    <div><span class="delta up">&#9650; +10.2%</span></div>
-    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">PW $105.10</div>
+    <div class="value">$112.50</div>
+    <div><span class="delta down">&#9660; -2.9%</span></div>
+    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">PW $115.87</div>
   </div>
   <div class="summary-cell highlighted">
     <div class="label">Total Klaviyo Attributed</div>
-    <div class="value">$10,308</div>
-    <div><span style="font-size:11px;color:var(--muted);">44.0% of total revenue</span></div>
-    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">Campaigns $2,761 &#183; Flows $7,548</div>
+    <div class="value">$1,612</div>
+    <div><span style="font-size:11px;color:var(--muted);">6.8% of total revenue</span></div>
+    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">Campaigns $1,366 &#183; Flows $246 <span style="color:var(--amber);">&#9888; partial</span></div>
   </div>
   <div class="summary-cell">
     <div class="label">Campaign Revenue</div>
-    <div class="value">$2,761</div>
-    <div><span class="delta up">&#9650; +42.3%</span></div>
-    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">PW $1,941 &#183; send-date</div>
+    <div class="value">$1,366</div>
+    <div><span class="delta down">&#9660; -48.4%</span></div>
+    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">PW $2,647 &#183; send-date</div>
   </div>
   <div class="summary-cell">
     <div class="label">Flow Revenue</div>
-    <div class="value">$7,548</div>
-    <div><span class="delta up">&#9650; +38.7%</span></div>
-    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">PW $5,442 &#183; event-time</div>
+    <div class="value">$246</div>
+    <div><span class="delta down">&#9660; -70.0%</span></div>
+    <div class="card-sub mono" style="font-size:11px;color:var(--muted);margin-top:4px;">PW $818 <span style="color:var(--amber);">&#9888; partial</span></div>
   </div>
 </div>
 
@@ -218,53 +223,53 @@
   <div class="cards-grid cards-6">
     <div class="metric-card">
       <div class="card-label">Rev per Email Send</div>
-      <div class="card-value">$690</div>
-      <div class="card-footer"><span class="delta up">&#9650; +6.7%</span><span style="font-size:11px;color:var(--muted);">PW $647</span></div>
+      <div class="card-value">$683</div>
+      <div class="card-footer"><span class="delta up">&#9650; +3.2%</span><span style="font-size:11px;color:var(--muted);">PW $662</span></div>
     </div>
     <div class="metric-card">
       <div class="card-label">Total Sends CW</div>
-      <div class="card-value">4</div>
-      <div class="card-footer"><span style="font-size:11px;color:var(--muted);">PW: 3 sends</span></div>
+      <div class="card-value">2</div>
+      <div class="card-footer"><span style="font-size:11px;color:var(--muted);">PW: 4 sends</span></div>
     </div>
     <div class="metric-card">
       <div class="card-label">Flow Coverage</div>
-      <div class="card-value">32.3%</div>
-      <div class="card-footer"><span class="delta neutral">&#8213; flat</span><span style="font-size:11px;color:var(--muted);">PW 32.6%</span></div>
+      <div class="card-value" style="color:var(--amber);">1.0%</div>
+      <div class="card-footer"><span class="delta down">&#9660; vs PW 3.5%</span><span style="font-size:11px;color:var(--amber);">&#9888; partial data</span></div>
     </div>
     <div class="metric-card">
       <div class="card-label">Campaign Coverage</div>
-      <div class="card-value">11.8%</div>
-      <div class="card-footer"><span class="delta up">&#9650; +0.2pp</span><span style="font-size:11px;color:var(--muted);">PW 11.6%</span></div>
+      <div class="card-value">5.8%</div>
+      <div class="card-footer"><span class="delta down">&#9660; vs PW 11.3%</span><span style="font-size:11px;color:var(--muted);">fewer sends</span></div>
     </div>
     <div class="metric-card">
       <div class="card-label">Open Rate WoW</div>
-      <div class="card-value" style="color:var(--amber);">59.3%</div>
-      <div class="card-footer"><span class="delta down">&#9660; -7.5pp</span><span style="font-size:11px;color:var(--muted);">PW 66.8%</span></div>
+      <div class="card-value" style="color:var(--amber);">57.7%</div>
+      <div class="card-footer"><span class="delta down">&#9660; -5.8pp</span><span style="font-size:11px;color:var(--muted);">PW 63.5%</span></div>
     </div>
     <div class="metric-card">
       <div class="card-label">Click Rate WoW</div>
-      <div class="card-value" style="color:var(--red);">0.51%</div>
-      <div class="card-footer"><span class="delta down">&#9660; -0.16pp</span><span style="font-size:11px;color:var(--muted);">PW 0.67%</span></div>
+      <div class="card-value" style="color:var(--amber);">1.14%</div>
+      <div class="card-footer"><span class="delta up">&#9650; +0.66pp</span><span style="font-size:11px;color:var(--muted);">PW 0.48% &#9650;</span></div>
     </div>
   </div>
 
   <div class="chart-wrap">
-    <div class="chart-title">Daily Revenue &#8212; Event-Time</div>
+    <div class="chart-title">Daily Revenue &#8212; Event-Time (Placed Order / Asia/Manila)</div>
     <canvas id="lineChart" height="90"></canvas>
     <div class="chart-note">
       <strong style="color:var(--blue);">&#8212; CW (filled area)</strong> &nbsp; <strong style="color:var(--orange);">- - - PW (dashed)</strong> &nbsp;|&nbsp;
-      Event-time data (daily buckets, Asia/Manila). CW peaked Thursday Jun 19 at $4,135. Strong mid-week revenue pattern. CW total $23,405 up +40.1% vs PW $16,711. Every CW day except Monday outpaced its PW equivalent. Father's Day weekend (Sat-Sun) held strong at $3,816 and $4,021 respectively.
+      CW peaked Tue Jun 23 at $4,419 &#8212; aligning with the Americana Boxer Briefs launch. Mid-week held strong ($4,400 Wed, $4,231 Thu). Weekend dipped Fri-Sat before recovering Sun ($3,984). Revenue was nearly flat WoW (+0.9%). Both weeks show a similar mid-week revenue peak pattern. CW Monday ($1,638) and PW Monday ($1,408) were both the weakest days. PW peak was Thu Jun 18 ($4,135, Navy Ball Pouch launch day).
     </div>
   </div>
 
   <div class="chart-wrap">
-    <div class="chart-title">Daily Revenue Breakdown &#8212; CW Flow vs Organic/Campaign (event-time, proportional estimate)</div>
+    <div class="chart-title">Daily Revenue Breakdown &#8212; CW Flow vs Organic/Campaign (proportional estimate, partial flow data)</div>
     <canvas id="stackedChart" height="90"></canvas>
     <div class="chart-note">
-      <strong style="color:var(--purple);">&#9632; Flow (CW)</strong> &nbsp;
+      <strong style="color:var(--purple);">&#9632; Flow (CW, est.)</strong> &nbsp;
       <strong style="color:var(--blue);">&#9632; Organic + Campaign (CW)</strong> &nbsp;
       <strong style="color:var(--orange);">- - - PW Total (event-time)</strong> &nbsp;|&nbsp;
-      Flow share of daily revenue is estimated proportionally (32.3% of daily total) as daily grouped flow data is unavailable. Welcome Series 15% accounts for $4,112 of the $7,548 flow total (54.5% of all flow revenue). Post Purchase 2 and Cart Abandonment are the next largest contributors.
+      Flow share (1.04%) is estimated from partial flow_report data. The Welcome Series, Post Purchase, and Cart Abandonment flows may not be fully captured in this report &#8212; see the Flows tab for details. Campaign-to-sales correlation is visible on Tue Jun 23 (Americana launch, +$780 vs Mon) and the dip on Fri Jun 26 (Pajama Shorts &#8212; small segment send).
     </div>
   </div>
 </div>
@@ -274,114 +279,104 @@
   <div class="cards-grid cards-5">
     <div class="metric-card">
       <div class="card-label">Campaign Revenue CW</div>
-      <div class="card-value">$2,760.60</div>
-      <div class="card-footer"><span class="delta up">&#9650; +42.3%</span><span style="font-size:11px;color:var(--muted);">PW $1,940.58</span></div>
+      <div class="card-value">$1,365.65</div>
+      <div class="card-footer"><span class="delta down">&#9660; -48.4%</span><span style="font-size:11px;color:var(--muted);">PW $2,647.33</span></div>
     </div>
     <div class="metric-card">
       <div class="card-label">Campaign Conversions CW</div>
-      <div class="card-value">19</div>
-      <div class="card-footer"><span style="font-size:11px;color:var(--muted);">across 4 sends</span></div>
+      <div class="card-value">11</div>
+      <div class="card-footer"><span style="font-size:11px;color:var(--muted);">across 2 sends</span></div>
     </div>
     <div class="metric-card">
       <div class="card-label">Rev per Email Send</div>
-      <div class="card-value">$690.15</div>
-      <div class="card-footer"><span class="delta up">&#9650; +6.7%</span><span style="font-size:11px;color:var(--muted);">PW $646.86</span></div>
+      <div class="card-value">$682.83</div>
+      <div class="card-footer"><span class="delta up">&#9650; +3.2%</span><span style="font-size:11px;color:var(--muted);">PW $661.83</span></div>
     </div>
     <div class="metric-card">
       <div class="card-label">Weighted Open Rate</div>
-      <div class="card-value" style="color:var(--amber);">59.3%</div>
-      <div class="card-footer"><span class="delta down">&#9660; -7.5pp</span><span style="font-size:11px;color:var(--muted);">PW 66.8%</span></div>
+      <div class="card-value" style="color:var(--amber);">57.7%</div>
+      <div class="card-footer"><span class="delta down">&#9660; -5.8pp</span><span style="font-size:11px;color:var(--muted);">PW 63.5%</span></div>
     </div>
     <div class="metric-card">
       <div class="card-label">Weighted Click Rate</div>
-      <div class="card-value" style="color:var(--red);">0.51%</div>
-      <div class="card-footer"><span class="delta down">&#9660; -0.16pp</span><span style="font-size:11px;color:var(--muted);">PW 0.67% &#9888;</span></div>
+      <div class="card-value" style="color:var(--amber);">1.14%</div>
+      <div class="card-footer"><span class="delta up">&#9650; +0.66pp</span><span style="font-size:11px;color:var(--muted);">PW 0.48% &#9650;</span></div>
     </div>
   </div>
 
   <div class="table-wrap">
-    <div class="table-header">&#127942; Top Campaigns &#8212; CW (Jun 15 - Jun 21)<span class="pill pill-email">Email</span></div>
+    <div class="table-header">&#127942; Top Campaigns &#8212; CW (Jun 22 &#8211; Jun 28)<span class="pill pill-email">Email</span></div>
     <table class="data-table">
       <thead><tr><th>#</th><th>Campaign</th><th>Revenue</th><th>Recipients</th><th>RPR</th><th>Open Rate</th><th>Click Rate</th><th>Unsubs</th></tr></thead>
       <tbody>
         <tr>
           <td><span class="rank gold">1</span></td>
-          <td><strong>Navy Ball Pouch Boxer Briefs</strong><br><span style="color:var(--muted);font-size:11px;">Jun 18 &#183; Engaged 90D (13,428 recipients)</span></td>
-          <td class="mono">$1,155.08</td>
-          <td class="mono">13,428</td>
-          <td class="mono">$0.086</td>
-          <td class="mono">62.66%</td>
-          <td class="mono" style="color:var(--red);">0.45%</td>
-          <td class="mono">22</td>
+          <td><strong>Limited Edition Boxer Briefs &#8216;Americana&#8217;</strong><br><span style="color:var(--muted);font-size:11px;">Jun 23 &#183; Engaged 90D &amp; Clicked (6,872 recipients)</span></td>
+          <td class="mono">$1,321.70</td>
+          <td class="mono">6,872</td>
+          <td class="mono" style="color:var(--green);">$0.192</td>
+          <td class="mono">59.5%</td>
+          <td class="mono">0.98%</td>
+          <td class="mono">24</td>
         </tr>
         <tr>
           <td><span class="rank">2</span></td>
-          <td><strong>Limited Edition Freedom Boxer Briefs</strong><br><span style="color:var(--muted);font-size:11px;">Jun 16 &#183; Engaged 90D + ATC 30D (13,456 recipients)</span></td>
-          <td class="mono">$694.30</td>
-          <td class="mono">13,456</td>
-          <td class="mono">$0.052</td>
-          <td class="mono" style="color:var(--green);">64.24%</td>
-          <td class="mono" style="color:var(--red);">0.39%</td>
-          <td class="mono">30</td>
-        </tr>
-        <tr>
-          <td><span class="rank">3</span></td>
-          <td><strong>Restock Green Boxer Briefs</strong><br><span style="color:var(--muted);font-size:11px;">Jun 20 &#183; Engaged 90D &amp; Clicked (6,898 recipients, tight)</span></td>
-          <td class="mono">$683.63</td>
-          <td class="mono">6,898</td>
-          <td class="mono" style="color:var(--green);">$0.099</td>
-          <td class="mono">53.76%</td>
-          <td class="mono" style="color:var(--red);">0.75%</td>
-          <td class="mono">14</td>
-        </tr>
-        <tr>
-          <td><span class="rank">4</span></td>
-          <td><strong>Father's Day Sale (Free Shipping + Free Pair)</strong><br><span style="color:var(--muted);font-size:11px;">Jun 21 &#183; Engaged 90D + Clicked + ATC 30D (6,923 recipients)</span></td>
-          <td class="mono">$227.60</td>
-          <td class="mono">6,923</td>
-          <td class="mono">$0.033</td>
-          <td class="mono" style="color:var(--red);">48.84%</td>
-          <td class="mono" style="color:var(--red);">0.61%</td>
-          <td class="mono">9</td>
+          <td><strong>35% Off Pajama Shorts Gray</strong><br><span style="color:var(--muted);font-size:11px;">Jun 26 &#183; Targeted segment (2,321 recipients)</span></td>
+          <td class="mono">$43.95</td>
+          <td class="mono">2,321</td>
+          <td class="mono" style="color:var(--red);">$0.019</td>
+          <td class="mono" style="color:var(--red);">52.3%</td>
+          <td class="mono" style="color:var(--green);">1.64%</td>
+          <td class="mono">6</td>
         </tr>
       </tbody>
     </table>
   </div>
 
   <div class="table-wrap">
-    <div class="table-header">&#128197; Top Campaigns &#8212; PW (Jun 8 - Jun 14)</div>
+    <div class="table-header">&#128197; Top Campaigns &#8212; PW (Jun 15 &#8211; Jun 21)</div>
     <table class="data-table">
       <thead><tr><th>#</th><th>Campaign</th><th>Revenue</th><th>Recipients</th><th>RPR</th><th>Open Rate</th><th>Click Rate</th><th>Unsubs</th></tr></thead>
       <tbody>
         <tr>
           <td><span class="rank gold">1</span></td>
-          <td><strong>No Nylon. No Polyester. No Chemical.</strong><br><span style="color:var(--muted);font-size:11px;">Jun 12 &#183; Engaged 20D &amp; Clicked (5,010 recipients, tight)</span></td>
-          <td class="mono">$1,204.62</td>
-          <td class="mono">5,010</td>
-          <td class="mono">$0.240</td>
-          <td class="mono" style="color:var(--green);">71.16%</td>
-          <td class="mono" style="color:var(--green);">1.32%</td>
+          <td><strong>Restock Green Boxer Briefs</strong><br><span style="color:var(--muted);font-size:11px;">Jun 20 &#183; Engaged 90D &amp; Clicked (6,898 recipients)</span></td>
+          <td class="mono">$1,140.64</td>
+          <td class="mono">6,898</td>
+          <td class="mono" style="color:var(--green);">$0.165</td>
+          <td class="mono">59.6%</td>
+          <td class="mono">0.77%</td>
           <td class="mono">21</td>
         </tr>
         <tr>
           <td><span class="rank">2</span></td>
-          <td><strong>Limited Edition Watermelon Boxer Briefs</strong><br><span style="color:var(--muted);font-size:11px;">Jun 9 &#183; Engaged 90D + ATC 30D (12,202 recipients)</span></td>
-          <td class="mono">$664.01</td>
-          <td class="mono">12,202</td>
-          <td class="mono">$0.054</td>
-          <td class="mono">66.14%</td>
-          <td class="mono" style="color:var(--red);">0.33%</td>
-          <td class="mono">44</td>
+          <td><strong>Navy Ball Pouch Boxer Briefs</strong><br><span style="color:var(--muted);font-size:11px;">Jun 18 &#183; Engaged 90D (13,428 recipients)</span></td>
+          <td class="mono">$775.35</td>
+          <td class="mono">13,428</td>
+          <td class="mono">$0.058</td>
+          <td class="mono" style="color:var(--green);">65.3%</td>
+          <td class="mono" style="color:var(--red);">0.41%</td>
+          <td class="mono">29</td>
         </tr>
         <tr>
           <td><span class="rank">3</span></td>
-          <td><strong>35% Off Long Sleeve Shirts Crimson</strong><br><span style="color:var(--muted);font-size:11px;">Jun 9 &#183; Buyers Size XL-3XL Engaged 120D (1,265 recipients)</span></td>
-          <td class="mono">$71.95</td>
-          <td class="mono">1,265</td>
-          <td class="mono">$0.057</td>
-          <td class="mono">56.29%</td>
-          <td class="mono" style="color:var(--green);">1.42%</td>
-          <td class="mono">4</td>
+          <td><strong>Father&#8217;s Day Sale (Free Shipping + Free Pair)</strong><br><span style="color:var(--muted);font-size:11px;">Jun 21 &#183; Engaged 90D &amp; Clicked (6,924 recipients)</span></td>
+          <td class="mono">$628.39</td>
+          <td class="mono">6,924</td>
+          <td class="mono">$0.091</td>
+          <td class="mono">59.4%</td>
+          <td class="mono" style="color:var(--red);">0.59%</td>
+          <td class="mono">11</td>
+        </tr>
+        <tr>
+          <td><span class="rank">4</span></td>
+          <td><strong>Limited Edition Freedom Boxer Briefs</strong><br><span style="color:var(--muted);font-size:11px;">Jun 16 &#183; Engaged 90D + ATC 30D (13,456 recipients)</span></td>
+          <td class="mono">$102.95</td>
+          <td class="mono">13,456</td>
+          <td class="mono" style="color:var(--red);">$0.008</td>
+          <td class="mono" style="color:var(--green);">65.8%</td>
+          <td class="mono" style="color:var(--red);">0.34%</td>
+          <td class="mono">30</td>
         </tr>
       </tbody>
     </table>
@@ -390,50 +385,55 @@
   <div class="unsub-panel">
     <h4>&#128228; Unsubscribe Pressure &#8212; CW</h4>
     <div class="unsub-grid">
-      <div class="unsub-stat"><div class="us-label">Total Email Unsubs (CW)</div><div class="us-value">75</div></div>
-      <div class="unsub-stat"><div class="us-label">Weighted Unsub Rate</div><div class="us-value" style="color:var(--green);">0.18%</div></div>
-      <div class="unsub-stat"><div class="us-label">Email Sends CW</div><div class="us-value">4</div></div>
-      <div class="unsub-stat"><div class="us-label">Total Recipients CW</div><div class="us-value">40,705</div></div>
+      <div class="unsub-stat"><div class="us-label">Total Email Unsubs (CW)</div><div class="us-value" style="color:var(--red);">30</div></div>
+      <div class="unsub-stat"><div class="us-label">Weighted Unsub Rate</div><div class="us-value" style="color:var(--red);">0.33%</div></div>
+      <div class="unsub-stat"><div class="us-label">Email Sends CW</div><div class="us-value">2</div></div>
+      <div class="unsub-stat"><div class="us-label">Total Recipients CW</div><div class="us-value">9,193</div></div>
     </div>
     <div class="chart-note" style="margin-top:12px;">
-      Unsub rate of <strong style="color:var(--green);">0.18%</strong> is well below the 0.30% warning threshold &#8212; healthy. Most pressure on the Freedom BBs send (13,456 recip, 30 unsubs = 0.22%). Father's Day Sale had the lowest unsubs (9 from 6,923 = 0.13%). The tight-segment sends continue to protect list health.
+      Unsub rate of <strong style="color:var(--red);">0.33%</strong> is above the 0.30% warning threshold. Most pressure came from the <strong>Americana campaign (Jun 23)</strong> &#8212; 24 unsubs from 6,872 recipients = 0.35%. The Pajama Shorts send had 6 unsubs from 2,321 = 0.26%. The Americana send reached the engaged-and-clicked segment which should be among the most receptive &#8212; the unsub signal is worth monitoring. Review whether the drop-exclusive offer triggered unsubscribes from subscribers who felt the product wasn&#8217;t for them. PW unsub rate was 0.22% across 40,706 recipients.
     </div>
   </div>
 
   <div class="insight-note">
-    <strong>Insight:</strong> Campaign revenue grew +42.3% WoW to $2,761 across 4 sends. The standout is <strong>Navy Ball Pouch Boxer Briefs (Jun 18)</strong> at $1,155 and $0.086 RPR &#8212; the strongest converting campaign of the week, which also validated the ball pouch product angle that was flagged for launch in prior competitor intel. <strong>Restock Green Boxer Briefs (Jun 20)</strong> earned the best RPR at $0.099 despite a mid-sized audience &#8212; tight-segment sends continue to punch above weight. <strong>Click rates are the problem across the board:</strong> every CW campaign scored below 1.0% CTR. The previous week's "No Nylon" campaign at 1.32% CTR on 5,010 recipients proves the format works &#8212; product education emails to a tight, clicked segment convert clicks far better than broad promo sends. The Father's Day Sale (Jun 21) had the lowest RPR ($0.033) despite a timely angle &#8212; the free-shipping + free-pair offer may have undersold urgency, or the audience had already purchased. Next priority: run a material education send to Engaged 30D. CTR benchmark is 1.20%.
+    <strong>Insight:</strong> Campaign revenue dropped -48.4% WoW to $1,366 &#8212; but this is almost entirely explained by the send count difference (2 CW vs 4 PW). Revenue per send actually improved slightly to $683 vs $662 PW (+3.2%). The <strong>Americana Boxer Briefs (Jun 23)</strong> was the standout of the week with $1,322 and a remarkable <strong>$0.192 RPR</strong> &#8212; the strongest RPR in recent weeks. The tight Engaged-90D-and-Clicked segment (6,872 recipients) proved that a focused audience on a genuine product story drives results. <strong>Pajama Shorts (Jun 26)</strong> delivered a strong CTR of 1.64% &#8212; above the 1.2% threshold &#8212; but only generated $44 from 1 conversion. The small segment (2,321) and niche product limited the ceiling. The biggest improvement this week is <strong>click rate: 1.14% CW vs 0.48% PW</strong>. This is the strongest CTR performance in several weeks and should be built on. Fewer sends, tighter audiences, and product-specific angles drove the improvement. Action: maintain the segment discipline and keep weekly sends at 2-3 with tight targeting rather than pushing volume.
   </div>
 </div>
 
 <!-- TAB 3: FLOWS -->
 <div id="tab-flows" class="tab-pane">
+
+  <div class="data-quality-note">
+    &#9888; <strong>Data quality note:</strong> Flow revenue this week is from the Klaviyo flow_report API (event-time, 7-day window). This report returned partial results &#8212; large flows including Welcome Series 15%, Post Purchase 2, and Cart Abandonment may not be fully captured. The flow totals below ($246 CW, $818 PW) are likely understated. For complete flow attribution, check Klaviyo &gt; Analytics &gt; Flows and filter by the same 7-day window using the Placed Order metric. This is a known API pagination limitation.
+  </div>
+
   <div class="cards-grid cards-4">
     <div class="metric-card">
-      <div class="card-label">Flow Revenue CW</div>
-      <div class="card-value">$7,547.79</div>
-      <div class="card-footer"><span class="delta up">&#9650; +38.7%</span><span style="font-size:11px;color:var(--muted);">PW $5,441.94</span></div>
+      <div class="card-label">Flow Revenue CW (partial)</div>
+      <div class="card-value" style="color:var(--amber);">$245.90</div>
+      <div class="card-footer"><span class="delta down">&#9660; -70.0%</span><span style="font-size:11px;color:var(--muted);">PW $818.19</span></div>
     </div>
     <div class="metric-card">
-      <div class="card-label">Flows % of Total Revenue</div>
-      <div class="card-value">32.3%</div>
-      <div class="card-footer"><span class="delta neutral">&#8213; flat</span><span style="font-size:11px;color:var(--muted);">PW 32.6%</span></div>
+      <div class="card-label">Flows % of Total Rev (partial)</div>
+      <div class="card-value" style="color:var(--amber);">1.0%</div>
+      <div class="card-footer"><span style="font-size:11px;color:var(--amber);">vs PW 3.5% &#8212; partial data</span></div>
     </div>
     <div class="metric-card">
       <div class="card-label">Top Flow CW</div>
-      <div class="card-value" style="font-size:14px;">Welcome 15%</div>
-      <div class="card-footer"><span style="font-size:11px;color:var(--blue);">$4,112 CW</span><span style="font-size:11px;color:var(--muted);">+12.8% WoW</span></div>
+      <div class="card-value" style="font-size:14px;">Cross Sell</div>
+      <div class="card-footer"><span style="font-size:11px;color:var(--blue);">$105.90 CW</span><span style="font-size:11px;color:var(--muted);">2 conv</span></div>
     </div>
     <div class="metric-card">
-      <div class="card-label">&#9888; Missing Flow</div>
-      <div class="card-value" style="color:var(--red);font-size:14px;">Cross Sell</div>
-      <div class="card-footer"><span style="font-size:11px;color:var(--red);">$0 CW vs $592 PW (-100%) &#8212; investigate</span></div>
+      <div class="card-label">Active Flows Captured</div>
+      <div class="card-value">3</div>
+      <div class="card-footer"><span style="font-size:11px;color:var(--amber);">of 14 flows queried &#8212; partial</span></div>
     </div>
   </div>
 
   <div class="table-wrap">
-    <div class="table-header">&#128202; Top Flows Leaderboard &#8212; CW vs PW</div>
+    <div class="table-header">&#128202; Flows Leaderboard &#8212; CW vs PW (partial data)</div>
     <div style="padding:12px 16px;border-bottom:1px solid var(--border);font-size:11px;color:var(--muted);">
-      Sorted by CW revenue descending &nbsp;|&nbsp; Bars scaled to max(CW,PW) per flow &nbsp;|&nbsp; <span style="color:var(--blue);">&#9632; CW</span> &nbsp; <span style="color:var(--orange);">&#9632; PW</span> &nbsp;|&nbsp; Event-time attribution (Placed Order)
+      Sorted by CW revenue descending &nbsp;|&nbsp; Bars scaled to max(CW,PW) per flow &nbsp;|&nbsp; <span style="color:var(--blue);">&#9632; CW</span> &nbsp; <span style="color:var(--orange);">&#9632; PW</span> &nbsp;|&nbsp; Source: flow_report API (Placed Order conversion, partial)
     </div>
     <div class="flow-row" style="background:var(--surface);border-bottom:1px solid var(--border);">
       <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;">Flow</div>
@@ -444,38 +444,8 @@
     </div>
 
     <div class="flow-row">
-      <div><div style="font-weight:600;font-size:13px;">Welcome Series 15%</div><span class="pill pill-email">Email</span></div>
-      <div class="mono" style="color:var(--blue);">$4,112.34</div>
-      <div class="mono" style="color:var(--orange);">$3,643.92</div>
-      <div><span class="delta up">&#9650; +12.8%</span></div>
-      <div class="progress-bars">
-        <div class="progress-track"><div class="progress-fill-blue" style="width:100%;"></div></div>
-        <div class="progress-track"><div class="progress-fill-orange" style="width:88.6%;"></div></div>
-      </div>
-    </div>
-    <div class="flow-row">
-      <div><div style="font-weight:600;font-size:13px;">Post Purchase 2 (Updated)</div><span class="pill pill-email">Email</span></div>
-      <div class="mono" style="color:var(--blue);">$1,601.05</div>
-      <div class="mono" style="color:var(--orange);">$400.60</div>
-      <div><span class="delta up">&#9650; +299.7%</span></div>
-      <div class="progress-bars">
-        <div class="progress-track"><div class="progress-fill-blue" style="width:100%;"></div></div>
-        <div class="progress-track"><div class="progress-fill-orange" style="width:25.0%;"></div></div>
-      </div>
-    </div>
-    <div class="flow-row">
-      <div><div style="font-weight:600;font-size:13px;">Cart Abandonment</div><span class="pill pill-email">Email</span><span class="pill pill-green" style="font-size:11px;margin-left:4px;">&#9650; Recovered</span></div>
-      <div class="mono" style="color:var(--blue);">$629.04</div>
-      <div class="mono" style="color:var(--orange);">$210.78</div>
-      <div><span class="delta up">&#9650; +198.5%</span></div>
-      <div class="progress-bars">
-        <div class="progress-track"><div class="progress-fill-blue" style="width:100%;"></div></div>
-        <div class="progress-track"><div class="progress-fill-orange" style="width:33.5%;"></div></div>
-      </div>
-    </div>
-    <div class="flow-row">
-      <div><div style="font-weight:600;font-size:13px;">Rise | Store Credit Issued</div><span class="pill pill-email">Email</span></div>
-      <div class="mono" style="color:var(--blue);">$393.55</div>
+      <div><div style="font-weight:600;font-size:13px;">Cross Sell</div><span class="pill pill-email">Email</span><span class="pill pill-green" style="font-size:11px;margin-left:4px;">&#9650; Back</span></div>
+      <div class="mono" style="color:var(--blue);">$105.90</div>
       <div class="mono" style="color:var(--muted);">&#8212;</div>
       <div><span class="delta up">&#9650; New</span></div>
       <div class="progress-bars">
@@ -485,88 +455,78 @@
     </div>
     <div class="flow-row">
       <div><div style="font-weight:600;font-size:13px;">Checkout Abandonment</div><span class="pill pill-email">Email</span></div>
-      <div class="mono" style="color:var(--blue);">$384.69</div>
-      <div class="mono" style="color:var(--orange);">$267.35</div>
-      <div><span class="delta up">&#9650; +43.9%</span></div>
+      <div class="mono" style="color:var(--blue);">$104.85</div>
+      <div class="mono" style="color:var(--orange);">$384.69</div>
+      <div><span class="delta down">&#9660; -72.7%</span></div>
       <div class="progress-bars">
-        <div class="progress-track"><div class="progress-fill-blue" style="width:100%;"></div></div>
-        <div class="progress-track"><div class="progress-fill-orange" style="width:69.5%;"></div></div>
-      </div>
-    </div>
-    <div class="flow-row">
-      <div><div style="font-weight:600;font-size:13px;">Unknown Flow (WBjMSK)</div><span class="pill pill-amber">Investigate</span></div>
-      <div class="mono" style="color:var(--blue);">$221.55</div>
-      <div class="mono" style="color:var(--muted);">&#8212;</div>
-      <div><span class="delta up">&#9650; New</span></div>
-      <div class="progress-bars">
-        <div class="progress-track"><div class="progress-fill-blue" style="width:100%;"></div></div>
-        <div class="progress-track"><div class="progress-fill-orange" style="width:0%;"></div></div>
-      </div>
-    </div>
-    <div class="flow-row">
-      <div><div style="font-weight:600;font-size:13px;">NRML | Out For Delivery</div><span class="pill pill-email">Email</span></div>
-      <div class="mono" style="color:var(--blue);">$102.95</div>
-      <div class="mono" style="color:var(--orange);">$119.79</div>
-      <div><span class="delta down">&#9660; -14.1%</span></div>
-      <div class="progress-bars">
-        <div class="progress-track"><div class="progress-fill-blue" style="width:86.0%;"></div></div>
+        <div class="progress-track"><div class="progress-fill-blue" style="width:27.3%;"></div></div>
         <div class="progress-track"><div class="progress-fill-orange" style="width:100%;"></div></div>
       </div>
     </div>
     <div class="flow-row">
-      <div><div style="font-weight:600;font-size:13px;">Post Purchase Repeat</div><span class="pill pill-email">Email</span></div>
-      <div class="mono" style="color:var(--blue);">$62.67</div>
+      <div><div style="font-weight:600;font-size:13px;">Failure to Launch (XLreS2)</div><span class="pill pill-email">Email</span></div>
+      <div class="mono" style="color:var(--blue);">$35.15</div>
       <div class="mono" style="color:var(--muted);">&#8212;</div>
       <div><span class="delta up">&#9650; New</span></div>
       <div class="progress-bars">
         <div class="progress-track"><div class="progress-fill-blue" style="width:100%;"></div></div>
         <div class="progress-track"><div class="progress-fill-orange" style="width:0%;"></div></div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div><div style="font-weight:600;font-size:13px;">Rise | Store Credit Issued</div><span class="pill pill-email">Email</span></div>
+      <div class="mono" style="color:var(--muted);">&#8212;</div>
+      <div class="mono" style="color:var(--orange);">$393.55</div>
+      <div><span class="delta down">&#9660; -100%</span></div>
+      <div class="progress-bars">
+        <div class="progress-track"><div class="progress-fill-blue" style="width:0%;"></div></div>
+        <div class="progress-track"><div class="progress-fill-orange" style="width:100%;"></div></div>
       </div>
     </div>
     <div class="flow-row">
       <div><div style="font-weight:600;font-size:13px;">Browse Abandonment</div><span class="pill pill-email">Email</span></div>
-      <div class="mono" style="color:var(--blue);">$39.95</div>
       <div class="mono" style="color:var(--muted);">&#8212;</div>
-      <div><span class="delta up">&#9650; New</span></div>
+      <div class="mono" style="color:var(--orange);">$39.95</div>
+      <div><span class="delta down">&#9660; -100%</span></div>
       <div class="progress-bars">
-        <div class="progress-track"><div class="progress-fill-blue" style="width:100%;"></div></div>
+        <div class="progress-track"><div class="progress-fill-blue" style="width:0%;"></div></div>
+        <div class="progress-track"><div class="progress-fill-orange" style="width:100%;"></div></div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div><div style="font-weight:600;font-size:13px;">Welcome Series 15%</div><span class="pill pill-amber">Verify in Klaviyo</span></div>
+      <div class="mono" style="color:var(--amber);">[TBC]</div>
+      <div class="mono" style="color:var(--amber);">[TBC]</div>
+      <div><span style="font-size:11px;color:var(--amber);">&#9888; Not in API response</span></div>
+      <div class="progress-bars">
+        <div class="progress-track"><div class="progress-fill-blue" style="width:0%;"></div></div>
         <div class="progress-track"><div class="progress-fill-orange" style="width:0%;"></div></div>
       </div>
     </div>
     <div class="flow-row">
-      <div><div style="font-weight:600;font-size:13px;">Cross Sell</div><span class="pill pill-email">Email</span><span class="pill pill-red" style="font-size:11px;margin-left:4px;">&#9888; Missing</span></div>
-      <div class="mono" style="color:var(--red);">$0</div>
-      <div class="mono" style="color:var(--orange);">$592.16</div>
-      <div><span class="delta down">&#9660; -100%</span></div>
+      <div><div style="font-weight:600;font-size:13px;">Post Purchase 2 (Updated)</div><span class="pill pill-amber">Verify in Klaviyo</span></div>
+      <div class="mono" style="color:var(--amber);">[TBC]</div>
+      <div class="mono" style="color:var(--amber);">[TBC]</div>
+      <div><span style="font-size:11px;color:var(--amber);">&#9888; Not in API response</span></div>
       <div class="progress-bars">
         <div class="progress-track"><div class="progress-fill-blue" style="width:0%;"></div></div>
-        <div class="progress-track"><div class="progress-fill-orange" style="width:100%;"></div></div>
+        <div class="progress-track"><div class="progress-fill-orange" style="width:0%;"></div></div>
       </div>
     </div>
     <div class="flow-row">
-      <div><div style="font-weight:600;font-size:13px;">Unknown Flow (XLreS2)</div><span class="pill pill-amber">Identify</span></div>
-      <div class="mono" style="color:var(--muted);">&#8212;</div>
-      <div class="mono" style="color:var(--orange);">$164.35</div>
-      <div><span class="delta down">&#9660; -100%</span></div>
+      <div><div style="font-weight:600;font-size:13px;">Cart Abandonment</div><span class="pill pill-amber">Verify in Klaviyo</span></div>
+      <div class="mono" style="color:var(--amber);">[TBC]</div>
+      <div class="mono" style="color:var(--amber);">[TBC]</div>
+      <div><span style="font-size:11px;color:var(--amber);">&#9888; Not in API response</span></div>
       <div class="progress-bars">
         <div class="progress-track"><div class="progress-fill-blue" style="width:0%;"></div></div>
-        <div class="progress-track"><div class="progress-fill-orange" style="width:100%;"></div></div>
-      </div>
-    </div>
-    <div class="flow-row">
-      <div><div style="font-weight:600;font-size:13px;">Site Abandonment</div><span class="pill pill-email">Email</span></div>
-      <div class="mono" style="color:var(--muted);">&#8212;</div>
-      <div class="mono" style="color:var(--orange);">$42.99</div>
-      <div><span class="delta down">&#9660; -100%</span></div>
-      <div class="progress-bars">
-        <div class="progress-track"><div class="progress-fill-blue" style="width:0%;"></div></div>
-        <div class="progress-track"><div class="progress-fill-orange" style="width:100%;"></div></div>
+        <div class="progress-track"><div class="progress-fill-orange" style="width:0%;"></div></div>
       </div>
     </div>
   </div>
 
   <div class="insight-note">
-    <strong>Insight:</strong> Flow revenue up +38.7% WoW to $7,548. The backbone is <strong>Welcome Series 15% (+12.8%, $4,112)</strong> &#8212; growing steadily, now at 54.5% of all flow revenue. The headline story this week is <strong>Post Purchase 2 surging +299.7%</strong> ($1,601 vs $401 PW) &#8212; check what changed in the flow to understand the driver; if it's a timing adjustment or message update, document it. <strong>Cart Abandonment is back</strong> ($629 CW vs $112 PW) after last week's collapse &#8212; the issue resolved itself, but the root cause should still be confirmed. On the negative side: <strong>Cross Sell posted zero revenue</strong> ($0 CW vs $592 PW) &#8212; this needs immediate investigation. Check Klaviyo flow status, trigger conditions, and whether the flow is paused, misfiring, or the trigger segment shrank. Also flag: two unknown flow IDs (WBjMSK, $222 and XLreS2 PW $164) need to be identified in Klaviyo &#8212; any revenue from an unidentified flow is a data governance gap. Flow revenue methodology: event-time metric aggregates (Asia/Manila, month-interval, may include minor Jun 22 spillover).
+    <strong>Insight:</strong> Three flows showed confirmed CW revenue: <strong>Cross Sell ($105.90)</strong> came back after posting $0 last week &#8212; check if a flow change or trigger re-activated it. <strong>Checkout Abandonment ($104.85)</strong> dropped -72.7% vs PW $384.69 &#8212; fewer abandoned checkouts or narrower attribution window. <strong>Failure to Launch (XLreS2, $35.15)</strong> is now identified by name. The large flows &#8212; Welcome Series 15%, Post Purchase 2, Cart Abandonment &#8212; did not appear in the API response this run, which is likely a pagination or attribution model difference vs prior reports. Prior week&#8217;s dashboard (Jun 15-21) computed flow revenue via metric_aggregates which showed $7,548 total. This report uses the flow_report API with a different attribution model. <strong>Action:</strong> Check Klaviyo UI &gt; Analytics &gt; Flows for the Jun 22-28 date range to get complete flow attribution. The API-level data here should be treated as a floor, not a ceiling.
   </div>
 </div>
 
@@ -579,7 +539,7 @@
   <div class="cards-grid cards-6">
     <div class="metric-card">
       <div class="card-label">List Size (Current)</div>
-      <div class="card-value">47,424</div>
+      <div class="card-value">47,616</div>
       <div class="card-footer"><span style="font-size:11px;color:var(--muted);">includes all statuses</span></div>
     </div>
     <div class="metric-card">
@@ -589,28 +549,28 @@
     </div>
     <div class="metric-card">
       <div class="card-label">Campaign Unsubs CW</div>
-      <div class="card-value">75</div>
-      <div class="card-footer"><span style="font-size:11px;color:var(--muted);">across 4 sends</span></div>
+      <div class="card-value" style="color:var(--red);">30</div>
+      <div class="card-footer"><span style="font-size:11px;color:var(--muted);">across 2 sends</span></div>
     </div>
     <div class="metric-card">
       <div class="card-label">Net List Growth</div>
-      <div class="card-value" style="color:var(--green);">+209</div>
-      <div class="card-footer"><span style="font-size:11px;color:var(--muted);">47,215 (Jun 15) &#8594; 47,424</span></div>
+      <div class="card-value" style="color:var(--green);">+192</div>
+      <div class="card-footer"><span style="font-size:11px;color:var(--muted);">47,424 (Jun 22) &#8594; 47,616</span></div>
     </div>
     <div class="metric-card">
       <div class="card-label">Engaged 30D &#183; ST5nUM</div>
-      <div class="card-value" style="color:var(--blue);">12,432</div>
+      <div class="card-value" style="color:var(--red);">12,341</div>
       <div class="card-footer">
-        <span style="font-size:11px;color:var(--blue);">26.2% of main list</span>
-        <span style="font-size:11px;color:var(--green);">&#9650; +128 from PW</span>
+        <span style="font-size:11px;color:var(--red);">25.9% of main list</span>
+        <span style="font-size:11px;color:var(--red);">&#9660; -91 from PW</span>
       </div>
     </div>
     <div class="metric-card">
       <div class="card-label">Unengaged 30D &#183; Sb6YKa</div>
-      <div class="card-value" style="color:var(--amber);">20,605</div>
+      <div class="card-value" style="color:var(--red);">20,842</div>
       <div class="card-footer">
-        <span style="font-size:11px;color:var(--amber);">43.5% of main list</span>
-        <span style="font-size:11px;color:var(--green);">&#9660; -44 from PW</span>
+        <span style="font-size:11px;color:var(--amber);">43.8% of main list</span>
+        <span style="font-size:11px;color:var(--red);">&#9650; +237 from PW</span>
       </div>
     </div>
   </div>
@@ -621,24 +581,24 @@
   </div>
   <div class="cards-grid cards-3">
     <div class="metric-card">
-      <div class="card-label">Engaged 30D Growth</div>
-      <div class="card-value" style="color:var(--green);">+128</div>
-      <div class="card-footer"><span style="font-size:11px;color:var(--muted);">12,304 (Jun 15 report) &#8594; 12,432 now</span></div>
+      <div class="card-label">Engaged 30D Change</div>
+      <div class="card-value" style="color:var(--red);">-91</div>
+      <div class="card-footer"><span style="font-size:11px;color:var(--muted);">12,432 (Jun 22 report) &#8594; 12,341 now</span></div>
     </div>
     <div class="metric-card">
       <div class="card-label">Unengaged 30D Change</div>
-      <div class="card-value" style="color:var(--green);">-44</div>
-      <div class="card-footer"><span style="font-size:11px;color:var(--muted);">20,649 (Jun 15 report) &#8594; 20,605 now</span></div>
+      <div class="card-value" style="color:var(--red);">+237</div>
+      <div class="card-footer"><span style="font-size:11px;color:var(--muted);">20,605 (Jun 22 report) &#8594; 20,842 now</span></div>
     </div>
     <div class="metric-card">
       <div class="card-label">Engaged / Unengaged Ratio</div>
-      <div class="card-value" style="color:var(--amber);">0.60x</div>
-      <div class="card-footer"><span style="font-size:11px;color:var(--muted);">1 engaged for every 1.66 unengaged</span></div>
+      <div class="card-value" style="color:var(--red);">0.59x</div>
+      <div class="card-footer"><span style="font-size:11px;color:var(--muted);">1 engaged for every 1.69 unengaged</span></div>
     </div>
   </div>
 
   <div class="insight-note">
-    <strong>Insight:</strong> Healthy week for list health. List grew +209 to 47,424 &#8212; consistent intake. The engagement signals are moving in the right direction for the first time in several weeks: <strong>Engaged 30D grew +128</strong> to 12,432 (26.2%) while <strong>Unengaged 30D dropped -44</strong> to 20,605 (43.5%). Still a concerning ratio (1 engaged per 1.66 unengaged) but the trend reversed this week. Unsub rate of 0.18% across 40,705 recipients is well within safe range. The tighter segment targeting on CW campaigns (Engaged 90D &amp; Clicked rather than broad Engaged 90D) is visibly protecting engagement quality. Priority remains: scheduled re-engagement or Sunset flow pass on the Unengaged 30D to accelerate that segment's decline. The ratio needs to get to 0.75x or above before broad sends are safe again.
+    <strong>Insight:</strong> List growth continues (+192 to 47,616) but the engagement picture reversed this week. <strong>Engaged 30D fell -91</strong> to 12,341 (25.9%) while <strong>Unengaged 30D grew +237</strong> to 20,842 (43.8%). Last week&#8217;s positive trend reversed. The ratio slipped to 0.59x from 0.60x &#8212; still at a critical level. The 43.8% unengaged proportion is a serious deliverability risk for any broad sends. Two sends at 9,193 total recipients this week was strategically sound &#8212; but the unengaged pool continues to grow from organic list additions who haven&#8217;t converted or engaged. <strong>Priority action:</strong> A re-engagement or Sunset flow pass on the Unengaged 30D segment is overdue. The gap between list growth (+192) and unengaged growth (+237) means new subscribers are arriving but falling into the unengaged bucket faster than the sends are re-activating them. Campaign unsubs (30) are below the natural engagement re-sort threshold &#8212; the issue is inbound, not outbound.
   </div>
 </div>
 
@@ -646,27 +606,27 @@
 <div id="tab-deliverability" class="tab-pane">
   <div style="margin-bottom:20px;">
     <div style="font-size:12px;color:var(--muted);margin-bottom:16px;">
-      Metrics calculated from CW campaign sends (Jun 15-21). 4 campaigns: Freedom BBs (13,456), Navy Ball Pouch BBs (13,428), Restock Green BBs (6,898), Father's Day Sale (6,923). Total 40,705 recipients. Weighted by delivered volume. Klaviyo numeric Deliverability Score not available via API.
+      Metrics calculated from CW campaign sends (Jun 22-28). 2 campaigns: Limited Edition Americana BBs (6,872) and 35% Off Pajama Shorts Gray (2,321). Total 9,193 recipients. Weighted by delivered volume.
     </div>
   </div>
   <div class="deliv-grid">
     <div class="deliv-card">
       <div class="d-label">Open Rate</div>
-      <div class="d-value" style="color:var(--green);">59.3%</div>
+      <div class="d-value" style="color:var(--green);">57.7%</div>
       <div class="d-status d-good">&#10003; GOOD</div>
-      <div style="font-size:11px;color:var(--muted);margin-top:8px;">Threshold: &ge; 33% &nbsp;|&nbsp; PW: 66.8%</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:8px;">Threshold: &ge; 33% &nbsp;|&nbsp; PW: 63.5%</div>
     </div>
     <div class="deliv-card">
       <div class="d-label">Click Rate</div>
-      <div class="d-value" style="color:var(--red);">0.51%</div>
-      <div class="d-status d-warn">&#9888; WARNING</div>
-      <div style="font-size:11px;color:var(--muted);margin-top:8px;">Threshold: &ge; 1.20% &nbsp;|&nbsp; PW: 0.67%</div>
+      <div class="d-value" style="color:var(--amber);">1.14%</div>
+      <div class="d-status d-warn">&#9888; NEAR</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:8px;">Threshold: &ge; 1.20% &nbsp;|&nbsp; PW: 0.48%</div>
     </div>
     <div class="deliv-card">
       <div class="d-label">Unsub Rate</div>
-      <div class="d-value" style="color:var(--green);">0.18%</div>
-      <div class="d-status d-good">&#10003; GOOD</div>
-      <div style="font-size:11px;color:var(--muted);margin-top:8px;">Threshold: &lt; 0.30% &nbsp;|&nbsp; PW: 0.36%</div>
+      <div class="d-value" style="color:var(--red);">0.33%</div>
+      <div class="d-status d-bad">&#9888; WARNING</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:8px;">Threshold: &lt; 0.30% &nbsp;|&nbsp; PW: 0.22%</div>
     </div>
     <div class="deliv-card">
       <div class="d-label">Bounce Rate</div>
@@ -683,23 +643,23 @@
   <div class="cards-grid cards-3">
     <div class="metric-card">
       <div class="card-label">Main Email List</div>
-      <div class="card-value">47,424</div>
+      <div class="card-value">47,616</div>
       <div class="card-sub">All statuses &#8212; Hi4BGj</div>
     </div>
     <div class="metric-card">
       <div class="card-label">Engaged 30D (ST5nUM)</div>
-      <div class="card-value" style="color:var(--blue);">12,432</div>
-      <div class="card-sub">Safe core sending audience</div>
+      <div class="card-value" style="color:var(--amber);">12,341</div>
+      <div class="card-sub">Safe core sending audience &#8212; down -91 WoW</div>
     </div>
     <div class="metric-card">
       <div class="card-label">Unengaged 30D (Sb6YKa)</div>
-      <div class="card-value" style="color:var(--amber);">20,605</div>
-      <div class="card-sub">43.5% of list &#8212; deliverability risk</div>
+      <div class="card-value" style="color:var(--red);">20,842</div>
+      <div class="card-sub">43.8% of list &#8212; deliverability risk +237 WoW</div>
     </div>
   </div>
 
   <div class="insight-note">
-    <strong>Open rate (59.3%)</strong> remains well above the 33% minimum threshold. The dip from 66.8% PW is partly explained by the Father's Day Sale landing on Father's Day itself (Jun 21) &#8212; a send day with typically lower open rates as audiences are busy. <strong>Click rate (0.51%)</strong> continues to underperform &#8212; it is the persistent issue across both CW and PW. The best CTR this week was the Restock Green BBs at 0.75%, still well below the 1.20% target. Last week's "No Nylon" campaign (1.32% CTR) at 5,010 tight recipients proves the format works. The path to better click rates is confirmed: tighter segments, educational angles, clear single CTA. <strong>Unsub rate (0.18%)</strong> is the brightest signal this week &#8212; down from 0.36% last week. Tighter segment targeting and a relevant angle (product-specific vs broad promo) drove the improvement. Action: the next broad send should remain within Engaged 30D (12,432) and lead with an education angle to push CTR back toward 1.0%+.
+    <strong>Open rate (57.7%)</strong> remains well above the 33% minimum. The dip from 63.5% PW is partly explained by the Pajama Shorts send to a smaller, less engaged segment (52.3% OR). The Americana campaign itself opened at 59.5% &#8212; healthy for a tight-audience send. <strong>Click rate (1.14%)</strong> is the best signal this week &#8212; up sharply from 0.48% PW. The Pajama Shorts drove 1.64% CTR (above the 1.2% target), and Americana came in at 0.98%. Weighted 1.14% is just below threshold but the directional trend is strongly positive. Two more sends at this CTR level and WAMA breaks back above 1.2%. <strong>Unsub rate (0.33%)</strong> is the concern this week &#8212; crossed the 0.30% threshold. The Americana campaign at 0.35% unsub rate is the primary driver. This is likely a product-fit signal (the drop format appeals to some, triggers unsubs from others). Monitor next week carefully. <strong>Action:</strong> Keep next send to Engaged-30D (12,341) or a sub-segment. The 43.8% unengaged pool should not receive the next campaign until the re-engagement pass is complete.
   </div>
 </div>
 
@@ -707,75 +667,49 @@
 <div id="tab-competitor" class="tab-pane">
   <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
     <div style="font-size:18px;font-weight:700;">NADS</div>
-    <div style="font-size:12px;color:var(--muted);">Weekly Intel Report &#8212; Week of Jun 15-21, 2026</div>
+    <div style="font-size:12px;color:var(--muted);">Weekly Intel Report &#8212; Week of Jun 22-28, 2026</div>
     <span class="badge" style="font-size:11px;color:var(--muted);">Source: support@nadsunder.com &#183; inbox monitoring</span>
   </div>
 
-  <div class="alert-bar" style="border:1px solid rgba(240,96,96,0.4);border-radius:10px;background:rgba(240,96,96,0.06);margin-bottom:20px;">
-    <span class="flag-pill flag-red">&#9888; 5 emails this week &#8212; heavy Father's Day urgency blitz</span>
-    <span class="flag-pill flag-red">&#9888; Jun 17: 2 emails in one day (5pm + 11pm) &#8212; list fatigue signal</span>
-    <span class="flag-pill flag-amber">&#9650; Post-sale NADS is quiet &#8212; clean inbox window for WAMA this week</span>
+  <div class="alert-bar" style="border:1px solid rgba(44,214,156,0.4);border-radius:10px;background:rgba(44,214,156,0.04);margin-bottom:20px;">
+    <span class="flag-pill flag-green">&#10003; 0 emails this week &#8212; NADS is in a post-Father&#8217;s Day cooldown</span>
+    <span class="flag-pill flag-green">&#10003; Last NADS send was Jun 21 &#8212; WAMA has a clean inbox window</span>
+    <span class="flag-pill flag-amber">&#9888; Expect NADS to restart in the next 1-2 weeks &#8212; monitor for next campaign cycle</span>
+  </div>
+
+  <div class="quiet-card">
+    <div class="quiet-icon">&#128263;</div>
+    <h3>NADS went quiet this week</h3>
+    <p>No emails received from NADS between Jun 22-28, 2026. Gmail search returned no results across a 14-day window. Their last send was Jun 21 &#8212; the "You come from a long line of NADS" Father&#8217;s Day brand email (no offer). After sending 5 emails across Jun 15-17 for their Father&#8217;s Day sale blitz, a cooldown period was expected. WAMA has a clean inbox window.</p>
   </div>
 
   <div class="nads-grid">
     <div class="intel-card">
-      <h3>&#128236; Emails Sent This Week <span style="color:var(--muted);font-weight:400;font-size:11px;">5 total &#183; Father's Day Sale close + holiday send</span></h3>
-
-      <div class="email-row">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span class="pill pill-amber" style="font-size:10px;">Urgency</span>
-          <span style="font-size:11px;color:var(--muted);">June 15, 2026</span>
-        </div>
-        <div class="email-subject">"48 Hours Left Of The Father's Day Sale"</div>
-        <div class="email-meta">Preview: "Last chance to take 20% off sitewide." Father's Day Sale urgency &#8212; 48-hour countdown. 20% off sitewide. Classic sale close structure.</div>
+      <h3>&#128200; This Week at a Glance</h3>
+      <div style="padding:12px;background:var(--surface);border-radius:8px;margin-bottom:10px;border:1px solid var(--border);">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">Emails sent Jun 22-28</div>
+        <div style="font-size:22px;font-weight:700;font-family:'Fira Code',monospace;color:var(--green);">0</div>
       </div>
-
-      <div class="email-row">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span class="pill pill-amber" style="font-size:10px;">Urgency</span>
-          <span style="font-size:11px;color:var(--muted);">June 16, 2026</span>
-        </div>
-        <div class="email-subject">"Wait &#128402; Don't Scroll"</div>
-        <div class="email-meta">Preview: "The Father's Day Sale Ends TOMORROW." Day-before urgency. Interruption subject line designed to stop the scroll. Last day of 20% off sale.</div>
+      <div style="padding:12px;background:var(--surface);border-radius:8px;margin-bottom:10px;border:1px solid var(--border);">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">Last send on record</div>
+        <div style="font-size:13px;font-weight:600;color:var(--text);">Jun 21, 2026</div>
+        <div style="font-size:11px;color:var(--muted);">"You come from a long line of NADS" &#8212; Father&#8217;s Day brand email. No offer.</div>
       </div>
-
-      <div class="email-row">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span class="pill pill-red" style="font-size:10px;">Urgency &#9888;</span>
-          <span style="font-size:11px;color:var(--muted);">June 17, 2026 &#8212; 5:00 PM</span>
-        </div>
-        <div class="email-subject">"Final Hours to Save Your Balls"</div>
-        <div class="email-meta">Preview: "20% off Father's Day Sale ends NOW." Final hours of the sale. Classic Nads double-entendre in subject line. Urgency copy, sale ends tonight.</div>
-      </div>
-
-      <div class="email-row">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span class="pill pill-red" style="font-size:10px;">Urgency &#9888; DOUBLE SEND</span>
-          <span style="font-size:11px;color:var(--muted);">June 17, 2026 &#8212; 11:01 PM</span>
-        </div>
-        <div class="email-subject">"The Father's Day Sale Ends Tonight"</div>
-        <div class="email-meta">Second email on the same day. Sent 6 hours after "Final Hours." Sale closing confirmation. Sending 2 emails in one day is a list fatigue signal &#8212; watch for unsubscribe spikes in their next cycle.</div>
-      </div>
-
-      <div class="email-row">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span class="pill pill-green" style="font-size:10px;">Branding</span>
-          <span style="font-size:11px;color:var(--muted);">June 21, 2026 (Father's Day)</span>
-        </div>
-        <div class="email-subject">"You come from a long line of NADS"</div>
-        <div class="email-meta">Preview: "Happy Father's Day to the original equipment." Post-sale Father's Day brand email. No offer. Celebrates the holiday. Strong lineage angle &#8212; "you are your father's son" reframed around anatomy. Clever and on-brand. No discount, no urgency, just identity.</div>
+      <div style="padding:12px;background:var(--surface);border-radius:8px;margin-bottom:10px;border:1px solid var(--border);">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">Pattern</div>
+        <div style="font-size:12px;color:var(--text);">NADS ran a 5-email Father&#8217;s Day blitz (Jun 15-17), followed by a holiday send on Jun 21. Cooldown is consistent with their post-sale pattern. Expect restart in 1-2 weeks, likely with a new product focus or mid-summer campaign.</div>
       </div>
     </div>
 
     <div class="intel-card">
-      <h3>&#127919; Steal-Worthy Angles</h3>
+      <h3>&#127919; Carry-Over Steal Angles (from Jun 15-21)</h3>
 
       <div class="steal-row">
         <span class="pill pill-high" style="font-size:11px;flex-shrink:0;">HIGH</span>
         <div class="steal-content">
-          <div class="steal-label" style="color:var(--red);">"You come from a long line of NADS" &#8212; Lineage + Identity Angle</div>
+          <div class="steal-label" style="color:var(--red);">"You come from a long line of NADS" &#8212; Lineage + Identity</div>
           <div class="steal-desc">
-            Best send of the week. No offer, no urgency &#8212; pure brand identity on Father's Day. The lineage angle ("you come from...") creates a sense of continuation and belonging. WAMA adaptation: "He wore what was available. You have better options." Post-Father's Day timing (send this week) &#8212; "Dad's had his day. Now what about you?" Leads naturally into the First Pair Guarantee. Non-buyer angle: make it personal, plain text, no hard sell.
+            Best send of last week. No offer. Post-Father&#8217;s Day timing. WAMA adaptation still live: "He wore what was available. You have better options." or "Dad&#8217;s had his day. Now what about you?" Plain text, non-buyer angle, First Pair Guarantee close. NADS is quiet &#8212; this angle can land without competitive noise right now.
           </div>
         </div>
       </div>
@@ -783,9 +717,9 @@
       <div class="steal-row">
         <span class="pill pill-medium" style="font-size:11px;flex-shrink:0;">MEDIUM</span>
         <div class="steal-content">
-          <div class="steal-label" style="color:var(--amber);">5-Email Urgency Ladder (Sale Close)</div>
+          <div class="steal-label" style="color:var(--amber);">Post-sale brand storytelling with no offer</div>
           <div class="steal-desc">
-            NADS ran a tight 3-day urgency ladder (Jun 15-17) before closing the Father's Day sale. The structure is disciplined: 48-hour warning, 24-hour warning, day-of AM push, day-of PM push. WAMA can borrow the cadence without the double-send slopiness. For WAMA's next sale: 48h, 24h, day-of. Never two emails in one day.
+            NADS closed their Father&#8217;s Day sale with a brand identity email (no discount, no urgency). The &#8220;cooldown send&#8221; format works: after sale pressure, audiences respond to something human. WAMA can run the same play this week &#8212; a plain text founder angle, no offer, just the hemp story.
           </div>
         </div>
       </div>
@@ -793,9 +727,9 @@
       <div class="steal-row">
         <span class="pill pill-medium" style="font-size:11px;flex-shrink:0;">MEDIUM</span>
         <div class="steal-content">
-          <div class="steal-label" style="color:var(--amber);">"Wait &#128402; Don't Scroll" &#8212; Scroll-Stopper Subject Line</div>
+          <div class="steal-label" style="color:var(--amber);">"Wait &#128402; Don&#8217;t Scroll" &#8212; Interruption Subject Line</div>
           <div class="steal-desc">
-            The interruption format SL ("Wait [pause] Don't Scroll") is designed to break inbox scanning behaviour. Works because it commands the reader before they decide. WAMA version: "Wait. Before you scroll past this." &#8212; followed by a genuinely compelling reason. Use sparingly &#8212; one per quarter maximum before the pattern loses effect.
+            Logged in swipe file from Jun 16. NADS ran it as a day-before urgency subject. WAMA version: "Wait. Before you scroll past this." &#8212; followed by a compelling single reason. Reserve for high-intent moments only &#8212; use sparingly.
           </div>
         </div>
       </div>
@@ -803,19 +737,19 @@
   </div>
 
   <div class="advantage-card">
-    <h3>&#10003; WAMA's Competitive Advantage vs NADS</h3>
+    <h3>&#10003; WAMA&#8217;s Competitive Advantage vs NADS &#8212; This Week</h3>
     <div class="cards-grid cards-3" style="margin-bottom:0;">
       <div style="padding:12px;background:rgba(44,214,156,0.06);border:1px solid rgba(44,214,156,0.15);border-radius:8px;">
-        <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:4px;">First Pair Guarantee vs 20% Off</div>
-        <div style="font-size:12px;color:var(--muted);">NADS ran a 5-email blitz to close a 20% off sale. WAMA's First Pair Guarantee removes purchase risk permanently without discounting. No urgency theatre needed.</div>
+        <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:4px;">Open Window</div>
+        <div style="font-size:12px;color:var(--muted);">NADS sent 5 emails in one week then went silent. Their audience is getting a break. WAMA can fill the inbox with a hemp story email right now &#8212; no NADS competition to cut through.</div>
       </div>
       <div style="padding:12px;background:rgba(44,214,156,0.06);border:1px solid rgba(44,214,156,0.15);border-radius:8px;">
-        <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:4px;">Hemp Material Story</div>
-        <div style="font-size:12px;color:var(--muted);">NADS runs on brand voice and organic cotton &#8212; zero hemp, zero material education this week. WAMA owns the material narrative entirely. Use it every time NADS goes quiet on fabric.</div>
+        <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:4px;">No Discount Needed</div>
+        <div style="font-size:12px;color:var(--muted);">NADS needed 5 emails and 20% off to close their Father&#8217;s Day sale. WAMA&#8217;s First Pair Guarantee removes purchase risk permanently. No urgency theatre, no discount dependency.</div>
       </div>
       <div style="padding:12px;background:rgba(44,214,156,0.06);border:1px solid rgba(44,214,156,0.15);border-radius:8px;">
-        <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:4px;">List Discipline</div>
-        <div style="font-size:12px;color:var(--muted);">NADS sent 2 emails on Jun 17 in one day. WAMA's tighter segment targeting and single-send discipline is a deliverability advantage they're steadily giving away.</div>
+        <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:4px;">Hemp Narrative</div>
+        <div style="font-size:12px;color:var(--muted);">NADS ran 5 sale emails with zero material education. Not a single line about fabric in their entire Father&#8217;s Day blitz. WAMA&#8217;s hemp story is untouched territory in this competitor&#8217;s inbox.</div>
       </div>
     </div>
   </div>
@@ -824,19 +758,15 @@
     <h3>&#9889; Recommended Actions for WAMA This Week</h3>
     <div class="action-item">
       <span class="ai-num">01</span>
-      <span>Send a post-Father's Day "treat yourself" email this week. "Dad's had his day. Now what about you?" or "He wore what was available. You have better options." Plain text, personal, First Pair Guarantee close. Segment: non-buyers or one-time buyers. NADS is quiet after their 5-send blitz. WAMA has a clean window.</span>
+      <span>Send a plain text email this week while NADS is silent. "He wore what was available. You have better options." &#8212; post-Father&#8217;s Day, no offer, personal tone. Segment: non-buyers or one-time buyers. NADS is out of the inbox. WAMA has the floor to itself.</span>
     </div>
     <div class="action-item">
       <span class="ai-num">02</span>
-      <span>Adapt the lineage angle for WAMA's brand without the anatomy framing. "You come from a long line of NADS" works because it ties identity to the product. WAMA version: a short story about why what's closest to you matters &#8212; leads into hemp's benefits without the double entendre.</span>
+      <span>Add Jun 21 "You come from a long line of NADS" to the Subject Line Swipe File if not already logged. Lineage angle, Father&#8217;s Day, no offer &#8212; HIGH steal potential for WAMA&#8217;s next brand story email.</span>
     </div>
     <div class="action-item">
       <span class="ai-num">03</span>
-      <span>Do not replicate the double-send on the same day. NADS sent two emails Jun 17 and likely damaged their inbox placement. WAMA's unsub rate this week (0.18%) vs NADS's double-send behaviour is a direct advantage. Document this as a rule: never two email sends in one calendar day.</span>
-    </div>
-    <div class="action-item">
-      <span class="ai-num">04</span>
-      <span>Log "Final Hours to Save Your Balls" in the NADS Subject Line Swipe File &#8212; strong double entendre urgency structure. Adapt for WAMA if running a future sale: "Final Hours to Try Hemp Risk-Free" or similar using the First Pair Guarantee as the urgency hook.</span>
+      <span>Monitor NADS inbox starting week of Jun 29. Their post-sale cooldown typically lasts 7-10 days. Expect new activity by Jul 1-3. Prepare a counter angle when the next campaign cycle begins.</span>
     </div>
   </div>
 </div>
@@ -845,112 +775,49 @@
 <div id="tab-undrdog" class="tab-pane">
   <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
     <div style="font-size:18px;font-weight:700;">Undrdog</div>
-    <div style="font-size:12px;color:var(--muted);">Weekly Intel Report &#8212; Week of Jun 15-21, 2026</div>
+    <div style="font-size:12px;color:var(--muted);">Weekly Intel Report &#8212; Week of Jun 22-28, 2026</div>
     <span class="badge" style="font-size:11px;color:var(--muted);">Source: support@undrdoghemp.com (Klaviyo) &#183; inbox monitoring</span>
   </div>
 
-  <div class="alert-bar" style="border:1px solid rgba(240,96,96,0.4);border-radius:10px;background:rgba(240,96,96,0.06);margin-bottom:20px;">
-    <span class="flag-pill flag-red">&#9888; 9 emails this week &#8212; heaviest send week on record for Undrdog</span>
-    <span class="flag-pill flag-red">&#9888; Jun 18: 2 emails (4PM launch + 8PM velocity update); Jun 21: 2 emails (3PM + 10:30PM) &#8212; inbox flood</span>
-    <span class="flag-pill flag-amber">&#128276; Blue Legacy (010) dropped Jun 18 &#8212; sold out in 12 hours. Pre-order closed Jun 21 midnight.</span>
-    <span class="flag-pill flag-green">&#10003; WAMA counter: always-in-stock angle is now the sharpest response to this model</span>
+  <div class="alert-bar" style="border:1px solid rgba(44,214,156,0.4);border-radius:10px;background:rgba(44,214,156,0.04);margin-bottom:20px;">
+    <span class="flag-pill flag-green">&#10003; 0 emails this week &#8212; Undrdog in post-drop quiet period (expected after 9-email Blue Legacy cycle)</span>
+    <span class="flag-pill flag-green">&#10003; Their audience is exhausted and frustrated. WAMA&#8217;s always-in-stock angle is the sharpest counter right now.</span>
+    <span class="flag-pill flag-amber">&#9888; Drop 011 likely in the next 1-2 weeks &#8212; prepare a same-day counter</span>
+  </div>
+
+  <div class="quiet-card">
+    <div class="quiet-icon">&#128263;</div>
+    <h3>Undrdog went quiet &#8212; post-drop cooldown</h3>
+    <p>Zero emails received from Undrdog Jun 22-28, 2026. After sending 9 emails in the Jun 15-21 Blue Legacy drop week &#8212; the heaviest send week in their history &#8212; a cooldown was expected. The founder closed with: <em>"We know we have blown up your inbox all weekend. This is the last email, we promise."</em> Consistent with their post-drop pattern (the same cooldown followed Drop 009: COMMANDO in early June).</p>
   </div>
 
   <div class="nads-grid">
     <div class="intel-card">
-      <h3>&#128236; Emails Sent This Week <span style="color:var(--muted);font-weight:400;font-size:11px;">9 total &#183; full Blue Legacy drop lifecycle</span></h3>
-
-      <div class="email-row">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span class="pill pill-amber" style="font-size:10px;">Teaser</span>
-          <span style="font-size:11px;color:var(--muted);">June 15</span>
-        </div>
-        <div class="email-subject">"NEW &#128309; COLOR &#128309; REVEALED"</div>
-        <div class="email-meta">010: Blue Legacy reveal. Most requested color in UndrDog history. June 18 drop date. Anticipation builder &#8212; no offer, no price, just the color reveal.</div>
+      <h3>&#128200; This Week at a Glance</h3>
+      <div style="padding:12px;background:var(--surface);border-radius:8px;margin-bottom:10px;border:1px solid var(--border);">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">Emails sent Jun 22-28</div>
+        <div style="font-size:22px;font-weight:700;font-family:'Fira Code',monospace;color:var(--green);">0</div>
       </div>
-
-      <div class="email-row">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span class="pill pill-amber" style="font-size:10px;">Pre-Drop</span>
-          <span style="font-size:11px;color:var(--muted);">June 16</span>
-        </div>
-        <div class="email-subject">"Giveaway: 010: Blue Legacy &#128309;"</div>
-        <div class="email-meta">Win Blue Legacy before anyone can buy it. Reply-to-win mechanic. Pre-drop list engagement and reply signal tactic.</div>
+      <div style="padding:12px;background:var(--surface);border-radius:8px;margin-bottom:10px;border:1px solid var(--border);">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">Last drop cycle</div>
+        <div style="font-size:13px;font-weight:600;color:var(--text);">010: Blue Legacy (navy tee)</div>
+        <div style="font-size:11px;color:var(--muted);">Jun 18 launch &#8212; sold out in 12 hours. Pre-order opened Jun 19, closed midnight Jun 21 (last week). 9 emails in 7 days. Founder apologised for inbox flood.</div>
       </div>
-
-      <div class="email-row">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span class="pill pill-amber" style="font-size:10px;">Countdown</span>
-          <span style="font-size:11px;color:var(--muted);">June 17</span>
-        </div>
-        <div class="email-subject">"One. More. Sleep."</div>
-        <div class="email-meta">24-hour countdown. "Blue Legacy goes live. Most requested color we've ever made." SMS subscribers got 1-hour early access (11AM vs 12PM for email). Minimal copy, maximum tension.</div>
-      </div>
-
-      <div class="email-row">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span class="pill pill-green" style="font-size:10px;">Launch</span>
-          <span style="font-size:11px;color:var(--muted);">June 18 &#8212; 4:00 PM &#9888;</span>
-        </div>
-        <div class="email-subject">"&#129327; New 010: Blue Legacy is LIVE &#129327;"</div>
-        <div class="email-meta">Launch email. 20,000 units for 350,000+ subscribers. Up to 30% off. Scarcity built into the send itself. Double emoji SL drives opens.</div>
-      </div>
-
-      <div class="email-row">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span class="pill pill-red" style="font-size:10px;">Velocity &#9888; DOUBLE</span>
-          <span style="font-size:11px;color:var(--muted);">June 18 &#8212; 8:00 PM</span>
-        </div>
-        <div class="email-subject">"Holy sh*t."</div>
-        <div class="email-meta">46% sold in 4 hours. Second email of the day. Sell velocity as social proof. No offer, pure urgency. Creates FOMO by publicising depletion rate.</div>
-      </div>
-
-      <div class="email-row">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span class="pill pill-amber" style="font-size:10px;">Post-Sellout</span>
-          <span style="font-size:11px;color:var(--muted);">June 19</span>
-        </div>
-        <div class="email-subject">"SOLD OUT but..."</div>
-        <div class="email-meta">Sold out same day. Pre-order option opening. Founder (Chuckie) apologises for the angry emails. Deliberately creates frustration then offers a fix.</div>
-      </div>
-
-      <div class="email-row">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span class="pill pill-amber" style="font-size:10px;">Pre-Order</span>
-          <span style="font-size:11px;color:var(--muted);">June 20</span>
-        </div>
-        <div class="email-subject">"Update on Blue Legacy"</div>
-        <div class="email-meta">"We threw together this pre-order window super fast after Blue Legacy sold out in 12 hours." No fancy design &#8212; plain text update announcing the pre-order. Ships end of July.</div>
-      </div>
-
-      <div class="email-row">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span class="pill pill-green" style="font-size:10px;">Father's Day</span>
-          <span style="font-size:11px;color:var(--muted);">June 21 &#8212; 2:57 PM &#9888;</span>
-        </div>
-        <div class="email-subject">"Have a beer, grill a steak, and Pre-order Blue Legacy (ends at midnight)"</div>
-        <div class="email-meta">Father's Day send tied to pre-order close. Founder shares his first Father's Day with son Charlie and their fertility journey. Personal, founder-led, raw. Product push buried in authentic story.</div>
-      </div>
-
-      <div class="email-row">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span class="pill pill-red" style="font-size:10px;">Last Call &#9888; DOUBLE</span>
-          <span style="font-size:11px;color:var(--muted);">June 21 &#8212; 10:30 PM</span>
-        </div>
-        <div class="email-subject">"Last call: Blue Legacy pre-order window closes at midnight."</div>
-        <div class="email-meta">Second email on Father's Day. Pre-order closes at midnight. Ended with: "We know we have blown up your inbox all weekend. This is the last email, we promise." Deliverability risk acknowledged by the founder.</div>
+      <div style="padding:12px;background:var(--surface);border-radius:8px;margin-bottom:10px;border:1px solid var(--border);">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">What&#8217;s next</div>
+        <div style="font-size:12px;color:var(--text);">Drop 011 is in preparation. Based on prior cadence (009 &#8594; 010 = 2-week gap), expect a teaser email within the next 7-14 days. Monitor for a new numbered drop, new product name, or pre-announcement angle.</div>
       </div>
     </div>
 
     <div class="intel-card">
-      <h3>&#127919; Steal-Worthy Angles</h3>
+      <h3>&#127919; Carry-Over + This Week&#8217;s Context</h3>
 
       <div class="steal-row">
         <span class="pill pill-high" style="font-size:11px;flex-shrink:0;">HIGH</span>
         <div class="steal-content">
-          <div class="steal-label" style="color:var(--red);">Founder Father's Day Storytelling (Jun 21)</div>
+          <div class="steal-label" style="color:var(--red);">Anti-Scarcity Counter (NOW)</div>
           <div class="steal-desc">
-            The strongest email of the week was not the launch or the sellout &#8212; it was the Father's Day personal story. Chuckie shared his first Father's Day, his son Charlie, their fertility journey, and why it led to what they put on their skin. That IS the WAMA positioning. WAMA can own the "why this material matters" story through a founder voice email: no scarcity, no drops, just "here is why I started making hemp underwear and why I care what you put on your body." Segment: all subscribers. Plain text. No hard CTA.
+            Undrdog&#8217;s audience is frustrated from the sellout, inbox-flooded from 9 emails, and now hearing nothing. WAMA&#8217;s counter this week: "No drops. No waitlists. No chaos. Your size is here when you want it." Plain text. First Pair Guarantee close. This window closes when Drop 011 launches.
           </div>
         </div>
       </div>
@@ -958,9 +825,9 @@
       <div class="steal-row">
         <span class="pill pill-high" style="font-size:11px;flex-shrink:0;">HIGH</span>
         <div class="steal-content">
-          <div class="steal-label" style="color:var(--red);">Anti-Scarcity Counter Positioning</div>
+          <div class="steal-label" style="color:var(--red);">Founder Father&#8217;s Day Storytelling (Jun 21)</div>
           <div class="steal-desc">
-            Undrdog's founder admitted reading "angry emails all morning" after the sellout. Their audience was frustrated. WAMA's counter: "No drops. No waitlists. No chaos. Your size is here when you want it." Plain text. This week. Segment: all subscribers or non-buyers. First Pair Guarantee close. The contrast has never been sharper. Key copy lift from Undrdog intel: "The whole brand came out of that journey. We changed everything we could control, including what we put on our skin." That is WAMA's positioning. Steal the energy, not the model.
+            Undrdog&#8217;s strongest email last week: founder Chuckie shared his first Father&#8217;s Day with son Charlie and their fertility journey. Raw, personal, no scarcity. WAMA can own this energy: "The whole brand came out of that journey. We changed everything we could control, including what we put on our skin." Plain text. Founder angle. Hemp story. No hard CTA.
           </div>
         </div>
       </div>
@@ -968,19 +835,9 @@
       <div class="steal-row">
         <span class="pill pill-medium" style="font-size:11px;flex-shrink:0;">MEDIUM</span>
         <div class="steal-content">
-          <div class="steal-label" style="color:var(--amber);">Reply-to-Win Engagement Hook (Jun 16)</div>
+          <div class="steal-label" style="color:var(--amber);">The Silence is the Gap</div>
           <div class="steal-desc">
-            Giveaway: Win Blue Legacy before anyone can buy it. "Takes 10 seconds to enter." Reply mechanic drives inbox signals and goodwill. WAMA adaptation (no FOMO frame needed): "What is the one thing you'd want us to add or improve?" or "Boxer briefs or trunks &#8212; which do you prefer?" Small reward for replies. Drives deliverability signals + real product intel.
-          </div>
-        </div>
-      </div>
-
-      <div class="steal-row">
-        <span class="pill pill-medium" style="font-size:11px;flex-shrink:0;">MEDIUM</span>
-        <div class="steal-content">
-          <div class="steal-label" style="color:var(--amber);">"One. More. Sleep." &#8212; Countdown Minimalism (Jun 17)</div>
-          <div class="steal-desc">
-            Three words. A countdown. No product details, no offer. Pure anticipation. WAMA can use this for a new product launch, restock, or limited run. "One. More. Sleep." works if the product is genuinely anticipated. Do not use for routine campaigns &#8212; reserve for real launches.
+            Undrdog&#8217;s entire programme is gated behind product launches. No drop = no email. WAMA can send any week, any angle, with zero dependency on a restock event. This week&#8217;s silence from both competitors is WAMA&#8217;s highest-value sending window. Use it.
           </div>
         </div>
       </div>
@@ -988,19 +845,19 @@
   </div>
 
   <div class="advantage-card">
-    <h3>&#10003; WAMA's Competitive Advantage vs Undrdog</h3>
+    <h3>&#10003; WAMA&#8217;s Competitive Advantage vs Undrdog &#8212; This Week</h3>
     <div class="cards-grid cards-3" style="margin-bottom:0;">
       <div style="padding:12px;background:rgba(44,214,156,0.06);border:1px solid rgba(44,214,156,0.15);border-radius:8px;">
-        <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:4px;">Always In Stock vs Drops + Chaos</div>
-        <div style="font-size:12px;color:var(--muted);">UndrDog sold out in 12 hours, opened a pre-order, and ended the week with a public apology for inbox flooding. WAMA: always available, always in your size, no waitlist. "No drops. No waitlists. Just hemp underwear, here when you want it."</div>
+        <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:4px;">Always In Stock vs Drop Dependency</div>
+        <div style="font-size:12px;color:var(--muted);">Undrdog can only send when a drop is ready. They went from 9 emails in 7 days to 0. Their list goes from overloaded to abandoned. WAMA sends on their own terms, every week. This is a structural advantage Undrdog can never fix without changing their entire business model.</div>
       </div>
       <div style="padding:12px;background:rgba(44,214,156,0.06);border:1px solid rgba(44,214,156,0.15);border-radius:8px;">
         <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:4px;">Zero Hemp Education in 9 Emails</div>
-        <div style="font-size:12px;color:var(--muted);">Nine emails, zero meaningful hemp content. 'Zero PFAS' appeared once as a product spec. Their audience is buying the drop experience, not the material. WAMA leads with hemp every send &#8212; that is the permanent gap.</div>
+        <div style="font-size:12px;color:var(--muted);">Nine emails during Blue Legacy week. Zero meaningful hemp content. "Zero PFAS" appeared once as a spec note. Their audience buys the drop experience, not the material. WAMA leads with hemp every send &#8212; that gap is permanent.</div>
       </div>
       <div style="padding:12px;background:rgba(44,214,156,0.06);border:1px solid rgba(44,214,156,0.15);border-radius:8px;">
-        <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:4px;">First Pair Guarantee vs None</div>
-        <div style="font-size:12px;color:var(--muted);">UndrDog mentioned Lifetime Warranty but never led with risk reversal in any of the 9 emails. WAMA's First Pair Guarantee is untouched territory. It removes the primary objection (what if I don't like them?) that Undrdog never addresses.</div>
+        <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:4px;">First Pair Guarantee</div>
+        <div style="font-size:12px;color:var(--muted);">Undrdog mentioned a Lifetime Warranty but never led with risk reversal in the drop cycle. WAMA&#8217;s First Pair Guarantee is the primary purchase objection handler Undrdog doesn&#8217;t have. Use it in the anti-scarcity counter email this week.</div>
       </div>
     </div>
   </div>
@@ -1009,19 +866,19 @@
     <h3>&#9889; Recommended Actions for WAMA This Week</h3>
     <div class="action-item">
       <span class="ai-num">01</span>
-      <span>Send the anti-scarcity counter email this week while the Undrdog inbox flood is still fresh. "No drops. No waitlists. No chaos. Your size is here when you want it." Plain text. Personal. First Pair Guarantee close. Segment: all active subscribers or non-buyers specifically. This is the cleanest counter-positioning opportunity WAMA has had.</span>
+      <span>Send the anti-scarcity counter email this week. "No drops. No waitlists. No chaos. Your size is here when you want it." Plain text. First Pair Guarantee close. Segment: all engaged subscribers or non-buyers specifically. Both NADS and Undrdog are silent. This is the clearest competitive window WAMA has had in weeks.</span>
     </div>
     <div class="action-item">
       <span class="ai-num">02</span>
-      <span>Consider a founder voice email in the next 2 weeks. Not a campaign &#8212; a personal story. Why hemp. What matters about what you put on your skin. Why WAMA exists. The Undrdog Father's Day email worked because it was real. WAMA can own that same energy without the scarcity model. Plain text, from a person.</span>
+      <span>Consider a founder story email within the next 2 weeks. Not a campaign &#8212; a personal email. Why hemp. Why what you put on your skin matters. Why WAMA exists. The Undrdog Father&#8217;s Day email worked because it was real. WAMA can own that same emotional register without the scarcity model.</span>
     </div>
     <div class="action-item">
       <span class="ai-num">03</span>
-      <span>Add the Blue Legacy drop details to the UndrDog Email Calendar xlsx and Subject Line Swipe File. Key data: 9 emails Jun 15-21, product = 010 Blue Legacy (navy hemp/bamboo tee, not underwear), 20,000 units, sold out in 12 hours, pre-order 10,000+ units, drops numbered (010 follows 009: COMMANDO).</span>
+      <span>Monitor for Drop 011 starting week of Jun 29. Watch for: new product name, a numbered drop teaser, or a &#8220;something is coming&#8221; angle from Undrdog. When it arrives, prepare a same-day or next-day counter emphasising always-in-stock. The contrast is the campaign.</span>
     </div>
     <div class="action-item">
       <span class="ai-num">04</span>
-      <span>Expect a quiet week or two from Undrdog. The founder ended with "This is the last email, we promise." Monitor for Drop 011 tease. When it comes, prepare a same-day counter. The gap between their drops is WAMA's highest-value sending window.</span>
+      <span>Note the deliverability cost of their model: Undrdog went from 9 emails in 7 days to 0. Their inbox placement will likely suffer from complaint spikes after the Blue Legacy inbox flood. WAMA&#8217;s consistent sending cadence (2-3 per week, tight segments, relevant angles) is a compounding advantage.</span>
     </div>
   </div>
 </div>
@@ -1043,8 +900,8 @@ new Chart(lineCtx, {
     labels: days,
     datasets: [
       {
-        label: 'CW Revenue (Jun 15-21)',
-        data: [1408.28, 3653.03, 2530.81, 4134.56, 3841.82, 3815.61, 4020.90],
+        label: 'CW Revenue (Jun 22-28)',
+        data: [1637.91, 4418.65, 4399.92, 4231.00, 2451.64, 2502.13, 3983.93],
         borderColor: '#41b9f8',
         backgroundColor: 'rgba(65,185,248,0.12)',
         borderWidth: 2.5,
@@ -1054,8 +911,8 @@ new Chart(lineCtx, {
         pointRadius: 4,
       },
       {
-        label: 'PW Revenue (Jun 8-14)',
-        data: [1275.55, 2654.32, 2835.29, 2183.03, 1812.24, 3340.74, 2609.88],
+        label: 'PW Revenue (Jun 15-21)',
+        data: [1408.28, 3653.03, 2530.81, 4134.56, 3841.82, 3815.61, 4020.90],
         borderColor: '#ff8c42',
         borderDash: [6, 3],
         borderWidth: 2,
@@ -1086,29 +943,29 @@ new Chart(stackedCtx, {
     datasets: [
       {
         type: 'bar',
-        label: 'CW Flow Revenue (est.)',
-        data: [454.2, 1177.9, 815.7, 1333.4, 1238.5, 1230.5, 1296.7],
+        label: 'CW Flow Revenue (est. 1.04% of daily)',
+        data: [17.03, 45.95, 45.76, 43.99, 25.50, 26.02, 41.43],
         backgroundColor: 'rgba(167,139,250,0.7)',
         stack: 'cw',
       },
       {
         type: 'bar',
         label: 'CW Organic + Campaign (est.)',
-        data: [954.1, 2475.1, 1715.1, 2801.2, 2603.3, 2585.1, 2724.2],
+        data: [1620.88, 4372.70, 4354.16, 4187.01, 2426.14, 2476.11, 3942.50],
         backgroundColor: 'rgba(65,185,248,0.7)',
         stack: 'cw',
       },
       {
         type: 'line',
-        label: 'PW Total (event-time)',
-        data: [1275.55, 2654.32, 2835.29, 2183.03, 1812.24, 3340.74, 2609.88],
+        label: 'PW Total (Jun 15-21)',
+        data: [1408.28, 3653.03, 2530.81, 4134.56, 3841.82, 3815.61, 4020.90],
         borderColor: '#ff8c42',
-        borderDash: [6,3],
+        borderDash: [6, 3],
         borderWidth: 2,
-        pointBackgroundColor: '#ff8c42',
-        pointRadius: 3,
         fill: false,
         tension: 0.35,
+        pointBackgroundColor: '#ff8c42',
+        pointRadius: 3,
       }
     ]
   },
@@ -1116,14 +973,15 @@ new Chart(stackedCtx, {
     responsive: true,
     plugins: {
       legend: { labels: { color: '#4e6a85', font: { family: 'Instrument Sans' } } },
-      tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': $' + ctx.parsed.y.toLocaleString('en-US', {minimumFractionDigits: 2}) } }
+      tooltip: { callbacks: { label: ctx => ' $' + ctx.parsed.y.toLocaleString('en-US', {minimumFractionDigits: 2}) } }
     },
     scales: {
-      x: { stacked: true, ticks: { color: '#4e6a85' }, grid: { color: 'rgba(23,40,64,0.8)' } },
+      x: { ticks: { color: '#4e6a85' }, grid: { color: 'rgba(23,40,64,0.8)' } },
       y: { stacked: true, ticks: { color: '#4e6a85', callback: v => '$' + v.toLocaleString() }, grid: { color: 'rgba(23,40,64,0.8)' } }
     }
   }
 });
 </script>
+
 </body>
 </html>
