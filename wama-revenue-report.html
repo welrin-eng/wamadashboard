@@ -212,7 +212,13 @@
       font-size: 11px;
       color: var(--muted);
     }
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
     .chart-wrap { position: relative; height: 210px; }
+    @media (max-width: 750px) { .chart-grid { grid-template-columns: 1fr; } }
 
     /* ─── TABLE ─── */
     .table-card {
@@ -410,15 +416,24 @@
     </div>
   </div>
 
-  <!-- TREND CHART -->
+  <!-- TREND CHARTS -->
   <div class="section">
-    <div class="section-label">Trend</div>
-    <div class="chart-card">
-      <div class="chart-header">
-        <div class="chart-title">Weekly Email Attributed Revenue</div>
-        <div class="chart-note">Campaigns + Flows combined</div>
+    <div class="section-label">Trend &mdash; 7-day rolling windows, Mon &amp; Thu snapshots</div>
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Attributed Revenue</div>
+          <div class="chart-note">Campaigns + Flows</div>
+        </div>
+        <div class="chart-wrap"><canvas id="revenue-chart"></canvas></div>
       </div>
-      <div class="chart-wrap"><canvas id="revenue-chart"></canvas></div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Revenue Per Recipient (RPR)</div>
+          <div class="chart-note">Total email</div>
+        </div>
+        <div class="chart-wrap"><canvas id="rpr-chart"></canvas></div>
+      </div>
     </div>
   </div>
 
@@ -426,7 +441,7 @@
   <div class="section">
     <div class="attr-note-bar">
       <div class="attr-dot"></div>
-      Attribution window: 5-day click / 1-day open &mdash; Shopify Placed Order metric (Klaviyo). Store revenue = all Shopify orders tracked via Klaviyo. Runs every Monday &amp; Thursday at 9 AM PHT.
+      Attribution: 5-day click / 1-day open &mdash; Shopify Placed Order (Klaviyo). Each snapshot covers a rolling 7-day window ending yesterday. Mon &amp; Thu windows overlap by 3-4 days &mdash; trend shows directional movement, not clean non-overlapping weeks.
     </div>
   </div>
 
@@ -630,6 +645,56 @@ function render() {
             color: '#6b7c74',
             font: { family: 'Inter', size: 11 },
             callback: v => '$' + v.toLocaleString()
+          }
+        }
+      }
+    }
+  });
+
+  // RPR trend chart
+  const rprData = reportData.map(r => parseFloat(r.total.rpr));
+  const campRprData = reportData.map(r => parseFloat(r.campaigns.rpr));
+  const flowRprData = reportData.map(r => parseFloat(r.flows.rpr));
+  const rprBase = { borderWidth: 2.5, pointRadius: 5, pointHoverRadius: 7, tension: 0.3, fill: false };
+
+  new Chart(document.getElementById('rpr-chart'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { ...rprBase, label: 'Total RPR',     data: rprData,     borderColor: '#3E6F58', pointBackgroundColor: '#3E6F58', backgroundColor: 'rgba(62,111,88,0.08)', fill: true },
+        { ...rprBase, label: 'Campaigns RPR', data: campRprData, borderColor: '#5a9278', pointBackgroundColor: '#5a9278', borderDash: [5,3] },
+        { ...rprBase, label: 'Flows RPR',     data: flowRprData, borderColor: '#a3c4b0', pointBackgroundColor: '#a3c4b0', borderDash: [5,3] }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          labels: { color: '#6b7c74', font: { family: 'Inter', size: 11 }, boxWidth: 12, padding: 16, usePointStyle: true }
+        },
+        tooltip: {
+          backgroundColor: '#fff',
+          titleColor: '#1a1a1a',
+          bodyColor: '#6b7c74',
+          borderColor: '#d4e2d9',
+          borderWidth: 1,
+          callbacks: {
+            label: ctx => '  ' + ctx.dataset.label + ': $' + Number(ctx.parsed.y).toFixed(4)
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: '#E7EFE9' },
+          ticks: { color: '#6b7c74', font: { family: 'Inter', size: 11 } }
+        },
+        y: {
+          grid: { color: '#E7EFE9' },
+          ticks: {
+            color: '#6b7c74',
+            font: { family: 'Inter', size: 11 },
+            callback: v => '$' + Number(v).toFixed(4)
           }
         }
       }
