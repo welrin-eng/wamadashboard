@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAMA · Revenue Report</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #060d18;
+      --surface: #0b1524;
+      --card: #0f1e30;
+      --border: #172840;
+      --text: #d8e8f6;
+      --muted: #4e6a85;
+      --blue: #41b9f8;
+      --orange: #ff8c42;
+      --green: #2cd69c;
+      --red: #f06060;
+      --amber: #f5c542;
+      --purple: #a78bfa;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    .header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .header-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .header-meta {
+      text-align: right;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* LAYOUT */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+    .section { margin-bottom: 28px; }
+    .section-title {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 14px;
+    }
+
+    /* METRIC GRID */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .metric-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 22px;
+    }
+    .metric-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+    .metric-value {
+      font-size: 30px;
+      font-weight: 600;
+      font-family: 'Fira Code', monospace;
+      color: var(--text);
+      line-height: 1;
+    }
+    .metric-delta {
+      font-size: 12px;
+      margin-top: 8px;
+      font-family: 'Fira Code', monospace;
+    }
+    .metric-delta.up   { color: var(--green); }
+    .metric-delta.down { color: var(--red); }
+    .metric-delta.neutral { color: var(--muted); }
+    .metric-prev {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    /* SPLIT CARDS */
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .split-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 22px;
+    }
+    .split-card-header {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+    .tag {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .tag-campaigns {
+      background: rgba(65,185,248,0.12);
+      border: 1px solid rgba(65,185,248,0.3);
+      color: var(--blue);
+    }
+    .tag-flows {
+      background: rgba(167,139,250,0.12);
+      border: 1px solid rgba(167,139,250,0.3);
+      color: var(--purple);
+    }
+    .split-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(23,40,64,0.6);
+    }
+    .split-row:last-child { border-bottom: none; }
+    .split-row-label { font-size: 12px; color: var(--muted); }
+    .split-row-value { font-family: 'Fira Code', monospace; font-size: 14px; color: var(--text); }
+
+    /* CHARTS */
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .chart-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 22px 22px 18px;
+    }
+    .chart-title {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 18px;
+    }
+    .chart-wrap { position: relative; height: 200px; }
+
+    /* HISTORY TABLE */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .table-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    thead th {
+      padding: 11px 14px;
+      text-align: right;
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      white-space: nowrap;
+    }
+    thead th:first-child,
+    thead th:nth-child(2) { text-align: left; }
+    tbody tr { border-bottom: 1px solid rgba(23,40,64,0.5); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(15,30,48,0.5); }
+    tbody td {
+      padding: 12px 14px;
+      text-align: right;
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    tbody td:first-child {
+      text-align: left;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    tbody td:nth-child(2) {
+      text-align: left;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 13px;
+      color: var(--text);
+    }
+    .td-up   { color: var(--green); }
+    .td-down { color: var(--red); }
+    .td-na   { color: var(--muted); font-size: 11px; }
+
+    /* FOOTER */
+    .footer {
+      text-align: center;
+      padding: 28px;
+      font-size: 11px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      margin-top: 16px;
+    }
+
+    @media (max-width: 720px) {
+      .metric-grid { grid-template-columns: 1fr; }
+      .split-grid  { grid-template-columns: 1fr; }
+      .chart-grid  { grid-template-columns: 1fr; }
+      .header { flex-direction: column; gap: 10px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-title">WAMA &middot; Revenue Report</div>
+    <div class="header-sub">Klaviyo Attributed Revenue &amp; Revenue Per Recipient &mdash; Campaigns &amp; Flows</div>
+  </div>
+  <div class="header-meta">
+    <div id="current-period">&mdash;</div>
+    <div id="generated-at">&mdash;</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- CURRENT WEEK TOTALS -->
+  <div class="section">
+    <div class="section-title">Current Week &mdash; Combined Total</div>
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-label">Attributed Revenue</div>
+        <div class="metric-value" id="total-revenue">&mdash;</div>
+        <div class="metric-delta neutral" id="total-revenue-delta">&mdash;</div>
+        <div class="metric-prev" id="total-revenue-prev"></div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Total Recipients</div>
+        <div class="metric-value" id="total-recipients">&mdash;</div>
+        <div class="metric-delta neutral" id="total-recipients-delta">&mdash;</div>
+        <div class="metric-prev" id="total-recipients-prev"></div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Revenue Per Recipient (RPR)</div>
+        <div class="metric-value" id="total-rpr">&mdash;</div>
+        <div class="metric-delta neutral" id="total-rpr-delta">&mdash;</div>
+        <div class="metric-prev" id="total-rpr-prev"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAMPAIGN vs FLOW BREAKDOWN -->
+  <div class="section">
+    <div class="section-title">Current Week &mdash; Campaign vs Flow</div>
+    <div class="split-grid">
+      <div class="split-card">
+        <div class="split-card-header"><span class="tag tag-campaigns">Campaigns</span></div>
+        <div class="split-row">
+          <span class="split-row-label">Attributed Revenue</span>
+          <span class="split-row-value" id="camp-revenue">&mdash;</span>
+        </div>
+        <div class="split-row">
+          <span class="split-row-label">Recipients</span>
+          <span class="split-row-value" id="camp-recipients">&mdash;</span>
+        </div>
+        <div class="split-row">
+          <span class="split-row-label">RPR</span>
+          <span class="split-row-value" id="camp-rpr">&mdash;</span>
+        </div>
+      </div>
+      <div class="split-card">
+        <div class="split-card-header"><span class="tag tag-flows">Flows</span></div>
+        <div class="split-row">
+          <span class="split-row-label">Attributed Revenue</span>
+          <span class="split-row-value" id="flow-revenue">&mdash;</span>
+        </div>
+        <div class="split-row">
+          <span class="split-row-label">Recipients</span>
+          <span class="split-row-value" id="flow-recipients">&mdash;</span>
+        </div>
+        <div class="split-row">
+          <span class="split-row-label">RPR</span>
+          <span class="split-row-value" id="flow-rpr">&mdash;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="section">
+    <div class="section-title">Trend History</div>
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-title">Weekly Attributed Revenue ($)</div>
+        <div class="chart-wrap"><canvas id="revenue-chart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Weekly RPR &mdash; Revenue Per Recipient ($)</div>
+        <div class="chart-wrap"><canvas id="rpr-chart"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTORY TABLE -->
+  <div class="section">
+    <div class="section-title">Full History Log</div>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Report Date</th>
+              <th>Week Period</th>
+              <th>Total Rev</th>
+              <th>Total RPR</th>
+              <th>Camp. Rev</th>
+              <th>Camp. RPR</th>
+              <th>Flow Rev</th>
+              <th>Flow RPR</th>
+              <th>WoW Rev $</th>
+              <th>WoW Rev %</th>
+              <th>WoW RPR %</th>
+            </tr>
+          </thead>
+          <tbody id="history-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  WAMA Underwear &mdash; Klaviyo Email Revenue Report &mdash; Attribution: 5-day click / 1-day open (Shopify)
+</div>
+
+<script>
+// ============================================================
+// DATA_START
+const reportData = [
+  {
+    reportDate: "2026-06-30",
+    weekPeriod: "Jun 23 - Jun 29",
+    campaigns: { recipients: 9193, revenue: 1365.65, rpr: 0.15 },
+    flows:     { recipients: 1559, revenue: 245.90,  rpr: 0.16 },
+    total:     { recipients: 10752, revenue: 1611.55, rpr: 0.15 },
+    wowRevenue:    null,
+    wowRevenuePct: null,
+    wowRpr:        null,
+    wowRprPct:     null
+  }
+];
+// DATA_END
+// ============================================================
+
+// ---- Helpers ----
+const fmt$ = v => v == null ? '--' : '$' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const fmtN = v => v == null ? '--' : Number(v).toLocaleString('en-US');
+const fmtPct = v => v == null ? null : (v >= 0 ? '+' : '') + Number(v).toFixed(2) + '%';
+const fmtDelta = v => v == null ? null : (v >= 0 ? '+' : '') + fmt$(v);
+
+function setMetric(valueId, deltaId, prevId, current, prev, type) {
+  const valEl   = document.getElementById(valueId);
+  const deltaEl = document.getElementById(deltaId);
+  const prevEl  = document.getElementById(prevId);
+
+  valEl.textContent = type === 'recipients' ? fmtN(current) : fmt$(current);
+
+  if (prev == null) {
+    deltaEl.textContent = 'First entry';
+    deltaEl.className = 'metric-delta neutral';
+    prevEl.textContent = '';
+    return;
+  }
+
+  const pct = ((current - prev) / prev) * 100;
+  const up  = pct >= 0;
+  deltaEl.textContent = (up ? '▲ ' : '▼ ') + Math.abs(pct).toFixed(2) + '% WoW';
+  deltaEl.className   = 'metric-delta ' + (up ? 'up' : 'down');
+  prevEl.textContent  = 'PW ' + (type === 'recipients' ? fmtN(prev) : fmt$(prev));
+}
+
+// ---- Chart config ----
+const gridColor = 'rgba(23,40,64,0.7)';
+const axisColor = '#4e6a85';
+const axisFont  = { family: 'Instrument Sans', size: 11 };
+const monoFont  = { family: 'Fira Code', size: 11 };
+Chart.defaults.color = axisColor;
+
+// ---- Render ----
+function render() {
+  if (!reportData.length) return;
+  const cur  = reportData[reportData.length - 1];
+  const prev = reportData.length > 1 ? reportData[reportData.length - 2] : null;
+
+  // Header
+  document.getElementById('current-period').textContent = 'Week: ' + cur.weekPeriod;
+  const d = new Date(cur.reportDate + 'T12:00:00');
+  document.getElementById('generated-at').textContent =
+    'Updated: ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+  // Summary metrics
+  setMetric('total-revenue',    'total-revenue-delta',    'total-revenue-prev',    cur.total.revenue,    prev ? prev.total.revenue    : null, 'revenue');
+  setMetric('total-recipients', 'total-recipients-delta', 'total-recipients-prev', cur.total.recipients, prev ? prev.total.recipients : null, 'recipients');
+  setMetric('total-rpr',        'total-rpr-delta',        'total-rpr-prev',        cur.total.rpr,        prev ? prev.total.rpr        : null, 'rpr');
+
+  // Campaign / Flow split
+  document.getElementById('camp-revenue').textContent    = fmt$(cur.campaigns.revenue);
+  document.getElementById('camp-recipients').textContent = fmtN(cur.campaigns.recipients);
+  document.getElementById('camp-rpr').textContent        = fmt$(cur.campaigns.rpr);
+  document.getElementById('flow-revenue').textContent    = fmt$(cur.flows.revenue);
+  document.getElementById('flow-recipients').textContent = fmtN(cur.flows.recipients);
+  document.getElementById('flow-rpr').textContent        = fmt$(cur.flows.rpr);
+
+  // Chart labels + data
+  const labels    = reportData.map(r => r.weekPeriod.split(' - ')[0]);
+  const totalRevs = reportData.map(r => r.total.revenue);
+  const campRevs  = reportData.map(r => r.campaigns.revenue);
+  const flowRevs  = reportData.map(r => r.flows.revenue);
+  const totalRprs = reportData.map(r => r.total.rpr);
+  const campRprs  = reportData.map(r => r.campaigns.rpr);
+  const flowRprs  = reportData.map(r => r.flows.rpr);
+
+  const base = { borderWidth: 2, pointRadius: 4, pointHoverRadius: 6, tension: 0.3, fill: false };
+
+  new Chart(document.getElementById('revenue-chart'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { ...base, label: 'Total',     data: totalRevs, borderColor: '#41b9f8', pointBackgroundColor: '#41b9f8' },
+        { ...base, label: 'Campaigns', data: campRevs,  borderColor: '#ff8c42', pointBackgroundColor: '#ff8c42', borderDash: [5,3] },
+        { ...base, label: 'Flows',     data: flowRevs,  borderColor: '#a78bfa', pointBackgroundColor: '#a78bfa', borderDash: [5,3] }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { color: axisColor, font: axisFont, boxWidth: 12, padding: 14 } },
+        tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ' + fmt$(ctx.parsed.y) } }
+      },
+      scales: {
+        x: { grid: { color: gridColor }, ticks: { color: axisColor, font: axisFont } },
+        y: { grid: { color: gridColor }, ticks: { color: axisColor, font: monoFont, callback: v => '$' + v.toLocaleString() } }
+      }
+    }
+  });
+
+  new Chart(document.getElementById('rpr-chart'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { ...base, label: 'Total RPR',    data: totalRprs, borderColor: '#2cd69c', pointBackgroundColor: '#2cd69c' },
+        { ...base, label: 'Campaign RPR', data: campRprs,  borderColor: '#f5c542', pointBackgroundColor: '#f5c542', borderDash: [5,3] },
+        { ...base, label: 'Flow RPR',     data: flowRprs,  borderColor: '#a78bfa', pointBackgroundColor: '#a78bfa', borderDash: [5,3] }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { color: axisColor, font: axisFont, boxWidth: 12, padding: 14 } },
+        tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': $' + Number(ctx.parsed.y).toFixed(4) } }
+      },
+      scales: {
+        x: { grid: { color: gridColor }, ticks: { color: axisColor, font: axisFont } },
+        y: { grid: { color: gridColor }, ticks: { color: axisColor, font: monoFont, callback: v => '$' + Number(v).toFixed(3) } }
+      }
+    }
+  });
+
+  // History table - newest first
+  const tbody = document.getElementById('history-tbody');
+  [...reportData].reverse().forEach(r => {
+    const tr = document.createElement('tr');
+    const wowRevAbs = r.wowRevenue != null
+      ? '<span class="' + (r.wowRevenue >= 0 ? 'td-up' : 'td-down') + '">' + fmtDelta(r.wowRevenue) + '</span>'
+      : '<span class="td-na">--</span>';
+    const wowRevPct = r.wowRevenuePct != null
+      ? '<span class="' + (r.wowRevenuePct >= 0 ? 'td-up' : 'td-down') + '">' + fmtPct(r.wowRevenuePct) + '</span>'
+      : '<span class="td-na">--</span>';
+    const wowRprPct = r.wowRprPct != null
+      ? '<span class="' + (r.wowRprPct >= 0 ? 'td-up' : 'td-down') + '">' + fmtPct(r.wowRprPct) + '</span>'
+      : '<span class="td-na">--</span>';
+
+    tr.innerHTML =
+      '<td>' + r.reportDate + '</td>' +
+      '<td>' + r.weekPeriod + '</td>' +
+      '<td>' + fmt$(r.total.revenue) + '</td>' +
+      '<td>' + fmt$(r.total.rpr) + '</td>' +
+      '<td>' + fmt$(r.campaigns.revenue) + '</td>' +
+      '<td>' + fmt$(r.campaigns.rpr) + '</td>' +
+      '<td>' + fmt$(r.flows.revenue) + '</td>' +
+      '<td>' + fmt$(r.flows.rpr) + '</td>' +
+      '<td>' + wowRevAbs + '</td>' +
+      '<td>' + wowRevPct + '</td>' +
+      '<td>' + wowRprPct + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+render();
+</script>
+</body>
+</html>
