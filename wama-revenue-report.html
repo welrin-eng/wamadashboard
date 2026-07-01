@@ -418,7 +418,7 @@
 
   <!-- TREND CHARTS -->
   <div class="section">
-    <div class="section-label">Trend &mdash; 7-day rolling windows, Mon &amp; Thu snapshots</div>
+    <div class="section-label">Weekly Trend &mdash; Monday snapshots only (complete Mon - Sun weeks)</div>
     <div class="chart-grid">
       <div class="chart-card">
         <div class="chart-header">
@@ -434,6 +434,14 @@
         </div>
         <div class="chart-wrap"><canvas id="rpr-chart"></canvas></div>
       </div>
+    </div>
+  </div>
+
+  <!-- TREND NOTE -->
+  <div class="section" style="margin-top:-14px; margin-bottom:14px;">
+    <div class="attr-note-bar">
+      <div class="attr-dot" style="background:#5a9278"></div>
+      Trend charts use Monday snapshots only. Each Monday run covers a complete Mon - Sun week, giving clean non-overlapping data points. Thursday data is visible in the Full History table below.
     </div>
   </div>
 
@@ -485,6 +493,7 @@ const reportData = [
   {
     reportDate: "2026-06-30",
     weekPeriod: "Jun 23 - Jun 29",
+    runDay: "monday",
     storeRevenue: null,
     emailAttributionPct: null,
     campaigns: { recipients: 9193, revenue: 1365.65, rpr: 0.1486 },
@@ -495,6 +504,7 @@ const reportData = [
   {
     reportDate: "2026-07-01",
     weekPeriod: "Jun 24 - Jun 30",
+    runDay: "thursday",
     storeRevenue: null,
     emailAttributionPct: null,
     campaigns: { recipients: 7706, revenue: 442.40, rpr: 0.0574 },
@@ -599,11 +609,12 @@ function render() {
     document.getElementById('flow-rev-pct').textContent = fPct(cur.flows.revenue / totalRev * 100);
   }
 
-  // Chart
-  const labels    = reportData.map(r => r.weekPeriod);
-  const totalRevs = reportData.map(r => r.total.revenue);
-  const campRevs  = reportData.map(r => r.campaigns.revenue);
-  const flowRevs  = reportData.map(r => r.flows.revenue);
+  // Charts — Monday snapshots only for clean non-overlapping weeks
+  const mondayData = reportData.filter(r => r.runDay === 'monday');
+  const labels    = mondayData.map(r => r.weekPeriod);
+  const totalRevs = mondayData.map(r => r.total.revenue);
+  const campRevs  = mondayData.map(r => r.campaigns.revenue);
+  const flowRevs  = mondayData.map(r => r.flows.revenue);
 
   const base = { borderWidth: 2.5, pointRadius: 5, pointHoverRadius: 7, tension: 0.3, fill: false };
 
@@ -651,10 +662,10 @@ function render() {
     }
   });
 
-  // RPR trend chart
-  const rprData = reportData.map(r => parseFloat(r.total.rpr));
-  const campRprData = reportData.map(r => parseFloat(r.campaigns.rpr));
-  const flowRprData = reportData.map(r => parseFloat(r.flows.rpr));
+  // RPR trend chart — same Monday filter
+  const rprData = mondayData.map(r => parseFloat(r.total.rpr));
+  const campRprData = mondayData.map(r => parseFloat(r.campaigns.rpr));
+  const flowRprData = mondayData.map(r => parseFloat(r.flows.rpr));
   const rprBase = { borderWidth: 2.5, pointRadius: 5, pointHoverRadius: 7, tension: 0.3, fill: false };
 
   new Chart(document.getElementById('rpr-chart'), {
