@@ -493,7 +493,6 @@ const reportData = [
   {
     reportDate: "2026-06-30",
     weekPeriod: "Jun 23 - Jun 29",
-    runDay: "monday",
     storeRevenue: null,
     emailAttributionPct: null,
     campaigns: { recipients: 9193, revenue: 1365.65, rpr: 0.1486 },
@@ -504,7 +503,6 @@ const reportData = [
   {
     reportDate: "2026-07-01",
     weekPeriod: "Jun 24 - Jun 30",
-    runDay: "thursday",
     storeRevenue: null,
     emailAttributionPct: null,
     campaigns: { recipients: 7706, revenue: 442.40, rpr: 0.0574 },
@@ -610,7 +608,7 @@ function render() {
   }
 
   // Charts — Monday snapshots only for clean non-overlapping weeks
-  const mondayData = reportData.filter(r => r.runDay === 'monday');
+  const mondayData = reportData.filter(r => new Date(r.reportDate + 'T12:00:00').getDay() === 1);
   const labels    = mondayData.map(r => r.weekPeriod);
   const totalRevs = mondayData.map(r => r.total.revenue);
   const campRevs  = mondayData.map(r => r.campaigns.revenue);
