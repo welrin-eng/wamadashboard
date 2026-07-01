@@ -3,369 +3,450 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WAMA · Revenue Report</title>
+  <title>WAMA · Email Revenue Report</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <style>
     :root {
-      --bg: #060d18;
-      --surface: #0b1524;
-      --card: #0f1e30;
-      --border: #172840;
-      --text: #d8e8f6;
-      --muted: #4e6a85;
-      --blue: #41b9f8;
-      --orange: #ff8c42;
-      --green: #2cd69c;
-      --red: #f06060;
-      --amber: #f5c542;
-      --purple: #a78bfa;
+      --green:       #3E6F58;
+      --green-dark:  #2d5241;
+      --green-light: #E7EFE9;
+      --green-mid:   #c5d9cc;
+      --white:       #FFFFFF;
+      --black:       #000000;
+      --text:        #1a1a1a;
+      --muted:       #6b7c74;
+      --border:      #d4e2d9;
+      --red:         #b83232;
+      --red-bg:      #fdf2f2;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: var(--bg);
+      background: var(--green-light);
       color: var(--text);
-      font-family: 'Instrument Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 14px;
       line-height: 1.5;
       min-height: 100vh;
     }
 
-    /* HEADER */
+    /* ─── HEADER ─── */
     .header {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 20px 32px;
+      background: var(--green);
+      padding: 20px 36px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    .header-title {
+    .header-left { display: flex; align-items: center; gap: 16px; }
+    .header-logo {
       font-size: 18px;
-      font-weight: 600;
-      color: var(--text);
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.08em;
     }
-    .header-sub {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 3px;
+    .header-pipe {
+      width: 1px; height: 22px;
+      background: rgba(255,255,255,0.3);
     }
-    .header-meta {
+    .header-subtitle {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.75);
+    }
+    .header-right {
       text-align: right;
       font-size: 12px;
-      color: var(--muted);
-      line-height: 1.7;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.8;
+    }
+    .header-period {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
     }
 
-    /* LAYOUT */
+    /* ─── LAYOUT ─── */
     .container {
-      max-width: 1100px;
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 32px 24px;
+      padding: 28px 24px 40px;
     }
-    .section { margin-bottom: 28px; }
-    .section-title {
+    .section { margin-bottom: 24px; }
+    .section-label {
       font-size: 10px;
       font-weight: 600;
       color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      margin-bottom: 14px;
-    }
-
-    /* METRIC GRID */
-    .metric-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-    .metric-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 20px 22px;
-    }
-    .metric-label {
-      font-size: 10px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
       margin-bottom: 10px;
     }
-    .metric-value {
-      font-size: 30px;
+
+    /* ─── HERO CARDS ─── */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .hero-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .hero-card.featured {
+      background: var(--green);
+      border-color: var(--green);
+    }
+    .hero-card-label {
+      font-size: 10px;
       font-weight: 600;
-      font-family: 'Fira Code', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .hero-card.featured .hero-card-label { color: rgba(255,255,255,0.65); }
+    .hero-card-value {
+      font-size: 28px;
+      font-weight: 700;
       color: var(--text);
+      letter-spacing: -0.02em;
       line-height: 1;
     }
-    .metric-delta {
+    .hero-card.featured .hero-card-value { color: var(--white); }
+    .hero-card-sub {
       font-size: 12px;
-      margin-top: 8px;
-      font-family: 'Fira Code', monospace;
+      font-weight: 500;
+      color: var(--muted);
+      margin-top: 5px;
     }
-    .metric-delta.up   { color: var(--green); }
-    .metric-delta.down { color: var(--red); }
-    .metric-delta.neutral { color: var(--muted); }
-    .metric-prev {
+    .hero-card.featured .hero-card-sub { color: rgba(255,255,255,0.6); }
+    .hero-card-delta {
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+    .hero-card-delta.up   { color: var(--green); }
+    .hero-card-delta.down { color: var(--red); }
+    .hero-card-delta.neutral { color: var(--muted); }
+    .hero-card.featured .hero-card-delta.up   { color: rgba(255,255,255,0.9); }
+    .hero-card.featured .hero-card-delta.down { color: #ffaaaa; }
+    .hero-card-prev {
       font-size: 11px;
       color: var(--muted);
-      margin-top: 3px;
+      margin-top: 2px;
     }
+    .hero-card.featured .hero-card-prev { color: rgba(255,255,255,0.5); }
 
-    /* SPLIT CARDS */
+    /* ─── SPLIT CARDS ─── */
     .split-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 14px;
     }
     .split-card {
-      background: var(--card);
+      background: var(--white);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 20px 22px;
+      border-radius: 10px;
+      padding: 20px 24px;
     }
     .split-card-header {
-      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .split-card-title {
+      font-size: 13px;
       font-weight: 600;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 16px;
+      color: var(--text);
     }
     .tag {
-      display: inline-block;
-      padding: 2px 9px;
-      border-radius: 4px;
+      padding: 3px 10px;
+      border-radius: 20px;
       font-size: 10px;
       font-weight: 600;
       letter-spacing: 0.05em;
+      text-transform: uppercase;
     }
-    .tag-campaigns {
-      background: rgba(65,185,248,0.12);
-      border: 1px solid rgba(65,185,248,0.3);
-      color: var(--blue);
-    }
-    .tag-flows {
-      background: rgba(167,139,250,0.12);
-      border: 1px solid rgba(167,139,250,0.3);
-      color: var(--purple);
-    }
+    .tag-campaigns { background: rgba(62,111,88,0.1); color: var(--green); }
+    .tag-flows     { background: var(--green-light); color: var(--muted); border: 1px solid var(--border); }
     .split-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(23,40,64,0.6);
+      padding: 9px 0;
+      border-bottom: 1px solid var(--green-light);
     }
     .split-row:last-child { border-bottom: none; }
     .split-row-label { font-size: 12px; color: var(--muted); }
-    .split-row-value { font-family: 'Fira Code', monospace; font-size: 14px; color: var(--text); }
+    .split-row-value { font-size: 14px; font-weight: 600; color: var(--text); }
+    .split-pct { font-size: 11px; font-weight: 400; color: var(--muted); margin-left: 5px; }
 
-    /* CHARTS */
-    .chart-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
+    /* ─── CHART ─── */
     .chart-card {
-      background: var(--card);
+      background: var(--white);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 22px 22px 18px;
+      border-radius: 10px;
+      padding: 22px 24px 18px;
+    }
+    .chart-header {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 20px;
     }
     .chart-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .chart-note {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .chart-wrap { position: relative; height: 210px; }
+
+    /* ─── TABLE ─── */
+    .table-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    thead tr { background: var(--green-light); }
+    thead th {
+      padding: 11px 14px;
+      text-align: right;
       font-size: 10px;
       font-weight: 600;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 18px;
-    }
-    .chart-wrap { position: relative; height: 200px; }
-
-    /* HISTORY TABLE */
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .table-wrap { overflow-x: auto; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12px;
-    }
-    thead th {
-      padding: 11px 14px;
-      text-align: right;
-      font-size: 9px;
-      font-weight: 600;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       border-bottom: 1px solid var(--border);
-      background: var(--surface);
       white-space: nowrap;
     }
     thead th:first-child,
     thead th:nth-child(2) { text-align: left; }
-    tbody tr { border-bottom: 1px solid rgba(23,40,64,0.5); }
+    tbody tr { border-bottom: 1px solid var(--green-light); }
     tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: rgba(15,30,48,0.5); }
+    tbody tr:hover { background: #f8fbf9; }
     tbody td {
       padding: 12px 14px;
       text-align: right;
-      font-family: 'Fira Code', monospace;
       font-size: 12px;
       color: var(--text);
       white-space: nowrap;
+      font-weight: 500;
     }
     tbody td:first-child {
       text-align: left;
-      font-family: 'Instrument Sans', sans-serif;
-      font-size: 12px;
       color: var(--muted);
+      font-weight: 400;
     }
     tbody td:nth-child(2) {
       text-align: left;
-      font-family: 'Instrument Sans', sans-serif;
-      font-size: 13px;
-      color: var(--text);
+      font-weight: 600;
     }
-    .td-up   { color: var(--green); }
-    .td-down { color: var(--red); }
-    .td-na   { color: var(--muted); font-size: 11px; }
+    .td-up   { color: var(--green); font-weight: 600; }
+    .td-down { color: var(--red);   font-weight: 600; }
+    .td-na   { color: var(--muted); font-weight: 400; }
 
-    /* FOOTER */
+    /* ─── ATTRIBUTION NOTE ─── */
+    .attr-note-bar {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .attr-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+    }
+
+    /* ─── FOOTER ─── */
     .footer {
       text-align: center;
-      padding: 28px;
+      padding: 20px;
       font-size: 11px;
       color: var(--muted);
       border-top: 1px solid var(--border);
-      margin-top: 16px;
+      background: var(--white);
+      margin-top: 8px;
     }
 
-    @media (max-width: 720px) {
-      .metric-grid { grid-template-columns: 1fr; }
-      .split-grid  { grid-template-columns: 1fr; }
-      .chart-grid  { grid-template-columns: 1fr; }
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .split-grid { grid-template-columns: 1fr; }
       .header { flex-direction: column; gap: 10px; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <div class="header">
-  <div>
-    <div class="header-title">WAMA &middot; Revenue Report</div>
-    <div class="header-sub">Klaviyo Attributed Revenue &amp; Revenue Per Recipient &mdash; Campaigns &amp; Flows</div>
+  <div class="header-left">
+    <div class="header-logo">WAMA</div>
+    <div class="header-pipe"></div>
+    <div class="header-subtitle">Email Revenue Report</div>
   </div>
-  <div class="header-meta">
-    <div id="current-period">&mdash;</div>
-    <div id="generated-at">&mdash;</div>
+  <div class="header-right">
+    <div class="header-period" id="header-period">&mdash;</div>
+    <div id="header-updated">&mdash;</div>
   </div>
 </div>
 
 <div class="container">
 
-  <!-- CURRENT WEEK TOTALS -->
+  <!-- CURRENT WEEK KPIs -->
   <div class="section">
-    <div class="section-title">Current Week &mdash; Combined Total</div>
-    <div class="metric-grid">
-      <div class="metric-card">
-        <div class="metric-label">Attributed Revenue</div>
-        <div class="metric-value" id="total-revenue">&mdash;</div>
-        <div class="metric-delta neutral" id="total-revenue-delta">&mdash;</div>
-        <div class="metric-prev" id="total-revenue-prev"></div>
+    <div class="section-label" id="kpi-section-label">Current Week</div>
+    <div class="hero-grid">
+
+      <div class="hero-card">
+        <div class="hero-card-label">Total Store Revenue</div>
+        <div class="hero-card-value" id="kpi-store-rev">&mdash;</div>
+        <div class="hero-card-sub" id="kpi-store-rev-sub">&mdash;</div>
+        <div class="hero-card-delta neutral" id="kpi-store-rev-delta"></div>
+        <div class="hero-card-prev" id="kpi-store-rev-prev"></div>
       </div>
-      <div class="metric-card">
-        <div class="metric-label">Total Recipients</div>
-        <div class="metric-value" id="total-recipients">&mdash;</div>
-        <div class="metric-delta neutral" id="total-recipients-delta">&mdash;</div>
-        <div class="metric-prev" id="total-recipients-prev"></div>
+
+      <div class="hero-card featured">
+        <div class="hero-card-label">Email Attributed Revenue</div>
+        <div class="hero-card-value" id="kpi-email-rev">&mdash;</div>
+        <div class="hero-card-sub" id="kpi-email-rev-pct">&mdash;</div>
+        <div class="hero-card-delta neutral" id="kpi-email-rev-delta"></div>
+        <div class="hero-card-prev" id="kpi-email-rev-prev"></div>
       </div>
-      <div class="metric-card">
-        <div class="metric-label">Revenue Per Recipient (RPR)</div>
-        <div class="metric-value" id="total-rpr">&mdash;</div>
-        <div class="metric-delta neutral" id="total-rpr-delta">&mdash;</div>
-        <div class="metric-prev" id="total-rpr-prev"></div>
+
+      <div class="hero-card">
+        <div class="hero-card-label">Email Attribution %</div>
+        <div class="hero-card-value" id="kpi-attr-pct">&mdash;</div>
+        <div class="hero-card-sub">of total store revenue</div>
+        <div class="hero-card-delta neutral" id="kpi-attr-pct-delta"></div>
+        <div class="hero-card-prev" id="kpi-attr-pct-prev"></div>
       </div>
+
+      <div class="hero-card">
+        <div class="hero-card-label">Revenue Per Recipient</div>
+        <div class="hero-card-value" id="kpi-rpr">&mdash;</div>
+        <div class="hero-card-sub" id="kpi-rpr-sub">&mdash; recipients</div>
+        <div class="hero-card-delta neutral" id="kpi-rpr-delta"></div>
+        <div class="hero-card-prev" id="kpi-rpr-prev"></div>
+      </div>
+
     </div>
   </div>
 
-  <!-- CAMPAIGN vs FLOW BREAKDOWN -->
+  <!-- CAMPAIGN vs FLOW -->
   <div class="section">
-    <div class="section-title">Current Week &mdash; Campaign vs Flow</div>
+    <div class="section-label">Campaigns vs Flows</div>
     <div class="split-grid">
+
       <div class="split-card">
-        <div class="split-card-header"><span class="tag tag-campaigns">Campaigns</span></div>
+        <div class="split-card-header">
+          <div class="split-card-title">Campaigns</div>
+          <span class="tag tag-campaigns">Email</span>
+        </div>
         <div class="split-row">
           <span class="split-row-label">Attributed Revenue</span>
-          <span class="split-row-value" id="camp-revenue">&mdash;</span>
+          <span class="split-row-value">
+            <span id="camp-rev">&mdash;</span>
+            <span class="split-pct" id="camp-rev-pct"></span>
+          </span>
         </div>
         <div class="split-row">
           <span class="split-row-label">Recipients</span>
-          <span class="split-row-value" id="camp-recipients">&mdash;</span>
+          <span class="split-row-value" id="camp-recip">&mdash;</span>
         </div>
         <div class="split-row">
           <span class="split-row-label">RPR</span>
           <span class="split-row-value" id="camp-rpr">&mdash;</span>
         </div>
       </div>
+
       <div class="split-card">
-        <div class="split-card-header"><span class="tag tag-flows">Flows</span></div>
+        <div class="split-card-header">
+          <div class="split-card-title">Flows</div>
+          <span class="tag tag-flows">Automated</span>
+        </div>
         <div class="split-row">
           <span class="split-row-label">Attributed Revenue</span>
-          <span class="split-row-value" id="flow-revenue">&mdash;</span>
+          <span class="split-row-value">
+            <span id="flow-rev">&mdash;</span>
+            <span class="split-pct" id="flow-rev-pct"></span>
+          </span>
         </div>
         <div class="split-row">
           <span class="split-row-label">Recipients</span>
-          <span class="split-row-value" id="flow-recipients">&mdash;</span>
+          <span class="split-row-value" id="flow-recip">&mdash;</span>
         </div>
         <div class="split-row">
           <span class="split-row-label">RPR</span>
           <span class="split-row-value" id="flow-rpr">&mdash;</span>
         </div>
       </div>
+
     </div>
   </div>
 
-  <!-- CHARTS -->
+  <!-- TREND CHART -->
   <div class="section">
-    <div class="section-title">Trend History</div>
-    <div class="chart-grid">
-      <div class="chart-card">
-        <div class="chart-title">Weekly Attributed Revenue ($)</div>
-        <div class="chart-wrap"><canvas id="revenue-chart"></canvas></div>
+    <div class="section-label">Trend</div>
+    <div class="chart-card">
+      <div class="chart-header">
+        <div class="chart-title">Weekly Email Attributed Revenue</div>
+        <div class="chart-note">Campaigns + Flows combined</div>
       </div>
-      <div class="chart-card">
-        <div class="chart-title">Weekly RPR &mdash; Revenue Per Recipient ($)</div>
-        <div class="chart-wrap"><canvas id="rpr-chart"></canvas></div>
-      </div>
+      <div class="chart-wrap"><canvas id="revenue-chart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTION NOTE -->
+  <div class="section">
+    <div class="attr-note-bar">
+      <div class="attr-dot"></div>
+      Attribution window: 5-day click / 1-day open &mdash; Shopify Placed Order metric (Klaviyo). Store revenue = all Shopify orders tracked via Klaviyo. Runs every Monday &amp; Thursday at 9 AM PHT.
     </div>
   </div>
 
   <!-- HISTORY TABLE -->
   <div class="section">
-    <div class="section-title">Full History Log</div>
-    <div class="card">
+    <div class="section-label">Full History</div>
+    <div class="table-card">
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>Report Date</th>
-              <th>Week Period</th>
-              <th>Total Rev</th>
-              <th>Total RPR</th>
-              <th>Camp. Rev</th>
-              <th>Camp. RPR</th>
-              <th>Flow Rev</th>
-              <th>Flow RPR</th>
-              <th>WoW Rev $</th>
+              <th>Date</th>
+              <th>Week</th>
+              <th>Store Rev</th>
+              <th>Email Rev</th>
+              <th>Attr %</th>
+              <th>RPR</th>
+              <th>Campaigns Rev</th>
+              <th>Flows Rev</th>
+              <th>WoW Rev</th>
               <th>WoW Rev %</th>
               <th>WoW RPR %</th>
             </tr>
@@ -379,7 +460,7 @@
 </div>
 
 <div class="footer">
-  WAMA Underwear &mdash; Klaviyo Email Revenue Report &mdash; Attribution: 5-day click / 1-day open (Shopify)
+  WAMA Underwear &mdash; Klaviyo Email Revenue Report &mdash; Updated automatically every Monday &amp; Thursday
 </div>
 
 <script>
@@ -389,184 +470,199 @@ const reportData = [
   {
     reportDate: "2026-06-30",
     weekPeriod: "Jun 23 - Jun 29",
-    campaigns: { recipients: 9193, revenue: 1365.65, rpr: 0.15 },
-    flows:     { recipients: 1559, revenue: 245.90,  rpr: 0.16 },
-    total:     { recipients: 10752, revenue: 1611.55, rpr: 0.15 },
-    wowRevenue:    null,
-    wowRevenuePct: null,
-    wowRpr:        null,
-    wowRprPct:     null
-  }
-,
+    storeRevenue: null,
+    emailAttributionPct: null,
+    campaigns: { recipients: 9193, revenue: 1365.65, rpr: 0.1486 },
+    flows:     { recipients: 1559, revenue: 245.90,  rpr: 0.1577 },
+    total:     { recipients: 10752, revenue: 1611.55, rpr: 0.1499 },
+    wowRevenue: null, wowRevenuePct: null, wowRpr: null, wowRprPct: null
+  },
   {
     reportDate: "2026-07-01",
     weekPeriod: "Jun 24 - Jun 30",
-    campaigns: { recipients: 7706, revenue: 323.50, rpr: 0.0420 },
-    flows:     { recipients: 1469, revenue: 345.05, rpr: 0.2349 },
-    total:     { recipients: 9175, revenue: 668.55, rpr: 0.0729 },
-    wowRevenue:    -4015.72,
-    wowRevenuePct: -85.73,
-    wowRpr:        -0.0581,
-    wowRprPct:     -44.36
-  }
-,
-  {
-    reportDate: "2026-07-01",
-    weekPeriod: "Jun 24 - Jun 30",
+    storeRevenue: null,
+    emailAttributionPct: null,
     campaigns: { recipients: 7706, revenue: 442.40, rpr: 0.0574 },
     flows:     { recipients: 1543, revenue: 345.05, rpr: 0.2236 },
     total:     { recipients: 9249, revenue: 787.45, rpr: 0.0851 },
-    wowRevenue:    -3896.82,
-    wowRevenuePct: -83.19,
-    wowRpr:        -0.0458,
-    wowRprPct:     -34.99
+    wowRevenue:    -824.10,
+    wowRevenuePct: -51.13,
+    wowRpr:        -0.0648,
+    wowRprPct:     -43.23
   }
 ];
 // DATA_END
 // ============================================================
 
-// ---- Helpers ----
-const fmt$ = v => v == null ? '--' : '$' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-const fmtN = v => v == null ? '--' : Number(v).toLocaleString('en-US');
-const fmtPct = v => v == null ? null : (v >= 0 ? '+' : '') + Number(v).toFixed(2) + '%';
-const fmtDelta = v => v == null ? null : (v >= 0 ? '+' : '') + fmt$(v);
+// ─── Formatters ───
+const f$ = v => v == null ? '--' : '$' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const fN  = v => v == null ? '--' : Number(v).toLocaleString('en-US');
+const fPct = v => v == null ? '--' : Number(v).toFixed(2) + '%';
+const fDelta = (v, type) => {
+  if (v == null) return null;
+  const sign = v >= 0 ? '+' : '';
+  if (type === 'pct')  return sign + Number(v).toFixed(2) + '%';
+  if (type === 'rev')  return (v >= 0 ? '+' : '') + f$(v);
+  return sign + Number(v).toFixed(4);
+};
+const cls = v => v == null ? 'neutral' : (v >= 0 ? 'up' : 'down');
+const arrow = v => v == null ? '' : (v >= 0 ? '▲ ' : '▼ ');
 
-function setMetric(valueId, deltaId, prevId, current, prev, type) {
+function setKpi(valueId, deltaId, prevId, subId, cur, prev, opts = {}) {
   const valEl   = document.getElementById(valueId);
   const deltaEl = document.getElementById(deltaId);
   const prevEl  = document.getElementById(prevId);
 
-  valEl.textContent = type === 'recipients' ? fmtN(current) : fmt$(current);
+  if (valEl)   valEl.textContent  = opts.format ? opts.format(cur) : f$(cur);
+  if (subId)   document.getElementById(subId).textContent = opts.sub || '';
 
-  if (prev == null) {
-    deltaEl.textContent = 'First entry';
-    deltaEl.className = 'metric-delta neutral';
-    prevEl.textContent = '';
+  if (!deltaEl) return;
+  if (prev == null || cur == null) {
+    deltaEl.textContent = cur == null ? 'No data yet' : 'First entry';
+    deltaEl.className = 'hero-card-delta neutral';
+    if (prevEl) prevEl.textContent = '';
     return;
   }
-
-  const pct = ((current - prev) / prev) * 100;
-  const up  = pct >= 0;
-  deltaEl.textContent = (up ? '▲ ' : '▼ ') + Math.abs(pct).toFixed(2) + '% WoW';
-  deltaEl.className   = 'metric-delta ' + (up ? 'up' : 'down');
-  prevEl.textContent  = 'PW ' + (type === 'recipients' ? fmtN(prev) : fmt$(prev));
+  const diff = cur - prev;
+  const pct  = (diff / prev) * 100;
+  deltaEl.textContent = arrow(pct) + Math.abs(pct).toFixed(2) + '% WoW';
+  deltaEl.className = 'hero-card-delta ' + cls(pct);
+  if (prevEl) prevEl.textContent = 'PW ' + (opts.prevFormat ? opts.prevFormat(prev) : f$(prev));
 }
 
-// ---- Chart config ----
-const gridColor = 'rgba(23,40,64,0.7)';
-const axisColor = '#4e6a85';
-const axisFont  = { family: 'Instrument Sans', size: 11 };
-const monoFont  = { family: 'Fira Code', size: 11 };
-Chart.defaults.color = axisColor;
-
-// ---- Render ----
 function render() {
   if (!reportData.length) return;
   const cur  = reportData[reportData.length - 1];
   const prev = reportData.length > 1 ? reportData[reportData.length - 2] : null;
 
   // Header
-  document.getElementById('current-period').textContent = 'Week: ' + cur.weekPeriod;
+  document.getElementById('header-period').textContent = cur.weekPeriod;
   const d = new Date(cur.reportDate + 'T12:00:00');
-  document.getElementById('generated-at').textContent =
-    'Updated: ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  document.getElementById('header-updated').textContent =
+    'Updated ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  document.getElementById('kpi-section-label').textContent =
+    'Current Week — ' + cur.weekPeriod;
 
-  // Summary metrics
-  setMetric('total-revenue',    'total-revenue-delta',    'total-revenue-prev',    cur.total.revenue,    prev ? prev.total.revenue    : null, 'revenue');
-  setMetric('total-recipients', 'total-recipients-delta', 'total-recipients-prev', cur.total.recipients, prev ? prev.total.recipients : null, 'recipients');
-  setMetric('total-rpr',        'total-rpr-delta',        'total-rpr-prev',        cur.total.rpr,        prev ? prev.total.rpr        : null, 'rpr');
+  // Store Revenue
+  setKpi('kpi-store-rev', 'kpi-store-rev-delta', 'kpi-store-rev-prev', 'kpi-store-rev-sub',
+    cur.storeRevenue, prev ? prev.storeRevenue : null,
+    { sub: cur.storeRevenue ? 'All Shopify orders' : 'Klaviyo pull coming soon' });
 
-  // Campaign / Flow split
-  document.getElementById('camp-revenue').textContent    = fmt$(cur.campaigns.revenue);
-  document.getElementById('camp-recipients').textContent = fmtN(cur.campaigns.recipients);
-  document.getElementById('camp-rpr').textContent        = fmt$(cur.campaigns.rpr);
-  document.getElementById('flow-revenue').textContent    = fmt$(cur.flows.revenue);
-  document.getElementById('flow-recipients').textContent = fmtN(cur.flows.recipients);
-  document.getElementById('flow-rpr').textContent        = fmt$(cur.flows.rpr);
+  // Email Attributed Revenue (featured card)
+  const emailPctSub = cur.storeRevenue
+    ? fPct((cur.total.revenue / cur.storeRevenue) * 100) + ' of store revenue'
+    : 'Email attributed';
+  setKpi('kpi-email-rev', 'kpi-email-rev-delta', 'kpi-email-rev-prev', 'kpi-email-rev-pct',
+    cur.total.revenue, prev ? prev.total.revenue : null,
+    { sub: emailPctSub });
 
-  // Chart labels + data
-  const labels    = reportData.map(r => r.weekPeriod.split(' - ')[0]);
+  // Attribution %
+  const curAttrPct  = cur.storeRevenue  ? (cur.total.revenue  / cur.storeRevenue  * 100) : null;
+  const prevAttrPct = (prev && prev.storeRevenue) ? (prev.total.revenue / prev.storeRevenue * 100) : null;
+  setKpi('kpi-attr-pct', 'kpi-attr-pct-delta', 'kpi-attr-pct-prev', null,
+    curAttrPct, prevAttrPct,
+    { format: v => v == null ? '--' : v.toFixed(1) + '%',
+      prevFormat: v => v == null ? '--' : v.toFixed(1) + '%' });
+
+  // RPR
+  setKpi('kpi-rpr', 'kpi-rpr-delta', 'kpi-rpr-prev', 'kpi-rpr-sub',
+    cur.total.rpr, prev ? prev.total.rpr : null,
+    { format: v => v == null ? '--' : '$' + Number(v).toFixed(4),
+      prevFormat: v => '$' + Number(v).toFixed(4),
+      sub: fN(cur.total.recipients) + ' recipients' });
+
+  // Campaign vs Flow
+  const totalRev = cur.total.revenue;
+  document.getElementById('camp-rev').textContent   = f$(cur.campaigns.revenue);
+  document.getElementById('camp-recip').textContent = fN(cur.campaigns.recipients);
+  document.getElementById('camp-rpr').textContent   = '$' + Number(cur.campaigns.rpr).toFixed(4);
+  document.getElementById('flow-rev').textContent   = f$(cur.flows.revenue);
+  document.getElementById('flow-recip').textContent = fN(cur.flows.recipients);
+  document.getElementById('flow-rpr').textContent   = '$' + Number(cur.flows.rpr).toFixed(4);
+  if (totalRev > 0) {
+    document.getElementById('camp-rev-pct').textContent = fPct(cur.campaigns.revenue / totalRev * 100);
+    document.getElementById('flow-rev-pct').textContent = fPct(cur.flows.revenue / totalRev * 100);
+  }
+
+  // Chart
+  const labels    = reportData.map(r => r.weekPeriod);
   const totalRevs = reportData.map(r => r.total.revenue);
   const campRevs  = reportData.map(r => r.campaigns.revenue);
   const flowRevs  = reportData.map(r => r.flows.revenue);
-  const totalRprs = reportData.map(r => r.total.rpr);
-  const campRprs  = reportData.map(r => r.campaigns.rpr);
-  const flowRprs  = reportData.map(r => r.flows.rpr);
 
-  const base = { borderWidth: 2, pointRadius: 4, pointHoverRadius: 6, tension: 0.3, fill: false };
+  const base = { borderWidth: 2.5, pointRadius: 5, pointHoverRadius: 7, tension: 0.3, fill: false };
 
   new Chart(document.getElementById('revenue-chart'), {
     type: 'line',
     data: {
       labels,
       datasets: [
-        { ...base, label: 'Total',     data: totalRevs, borderColor: '#41b9f8', pointBackgroundColor: '#41b9f8' },
-        { ...base, label: 'Campaigns', data: campRevs,  borderColor: '#ff8c42', pointBackgroundColor: '#ff8c42', borderDash: [5,3] },
-        { ...base, label: 'Flows',     data: flowRevs,  borderColor: '#a78bfa', pointBackgroundColor: '#a78bfa', borderDash: [5,3] }
+        { ...base, label: 'Total Email', data: totalRevs, borderColor: '#3E6F58', pointBackgroundColor: '#3E6F58', backgroundColor: 'rgba(62,111,88,0.08)', fill: true },
+        { ...base, label: 'Campaigns',   data: campRevs,  borderColor: '#5a9278', pointBackgroundColor: '#5a9278', borderDash: [5,3] },
+        { ...base, label: 'Flows',       data: flowRevs,  borderColor: '#a3c4b0', pointBackgroundColor: '#a3c4b0', borderDash: [5,3] }
       ]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: {
-        legend: { labels: { color: axisColor, font: axisFont, boxWidth: 12, padding: 14 } },
-        tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ' + fmt$(ctx.parsed.y) } }
+        legend: {
+          labels: { color: '#6b7c74', font: { family: 'Inter', size: 11 }, boxWidth: 12, padding: 16, usePointStyle: true }
+        },
+        tooltip: {
+          backgroundColor: '#fff',
+          titleColor: '#1a1a1a',
+          bodyColor: '#6b7c74',
+          borderColor: '#d4e2d9',
+          borderWidth: 1,
+          callbacks: {
+            label: ctx => '  ' + ctx.dataset.label + ': ' + f$(ctx.parsed.y)
+          }
+        }
       },
       scales: {
-        x: { grid: { color: gridColor }, ticks: { color: axisColor, font: axisFont } },
-        y: { grid: { color: gridColor }, ticks: { color: axisColor, font: monoFont, callback: v => '$' + v.toLocaleString() } }
+        x: {
+          grid: { color: '#E7EFE9' },
+          ticks: { color: '#6b7c74', font: { family: 'Inter', size: 11 } }
+        },
+        y: {
+          grid: { color: '#E7EFE9' },
+          ticks: {
+            color: '#6b7c74',
+            font: { family: 'Inter', size: 11 },
+            callback: v => '$' + v.toLocaleString()
+          }
+        }
       }
     }
   });
 
-  new Chart(document.getElementById('rpr-chart'), {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [
-        { ...base, label: 'Total RPR',    data: totalRprs, borderColor: '#2cd69c', pointBackgroundColor: '#2cd69c' },
-        { ...base, label: 'Campaign RPR', data: campRprs,  borderColor: '#f5c542', pointBackgroundColor: '#f5c542', borderDash: [5,3] },
-        { ...base, label: 'Flow RPR',     data: flowRprs,  borderColor: '#a78bfa', pointBackgroundColor: '#a78bfa', borderDash: [5,3] }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { labels: { color: axisColor, font: axisFont, boxWidth: 12, padding: 14 } },
-        tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': $' + Number(ctx.parsed.y).toFixed(4) } }
-      },
-      scales: {
-        x: { grid: { color: gridColor }, ticks: { color: axisColor, font: axisFont } },
-        y: { grid: { color: gridColor }, ticks: { color: axisColor, font: monoFont, callback: v => '$' + Number(v).toFixed(3) } }
-      }
-    }
-  });
-
-  // History table - newest first
+  // History table — newest first
   const tbody = document.getElementById('history-tbody');
   [...reportData].reverse().forEach(r => {
-    const tr = document.createElement('tr');
-    const wowRevAbs = r.wowRevenue != null
-      ? '<span class="' + (r.wowRevenue >= 0 ? 'td-up' : 'td-down') + '">' + fmtDelta(r.wowRevenue) + '</span>'
+    const attrPct = r.storeRevenue ? fPct(r.total.revenue / r.storeRevenue * 100) : '--';
+    const wowRev = r.wowRevenue != null
+      ? `<span class="${r.wowRevenue >= 0 ? 'td-up' : 'td-down'}">${(r.wowRevenue >= 0 ? '+' : '') + f$(r.wowRevenue)}</span>`
       : '<span class="td-na">--</span>';
     const wowRevPct = r.wowRevenuePct != null
-      ? '<span class="' + (r.wowRevenuePct >= 0 ? 'td-up' : 'td-down') + '">' + fmtPct(r.wowRevenuePct) + '</span>'
+      ? `<span class="${r.wowRevenuePct >= 0 ? 'td-up' : 'td-down'}">${(r.wowRevenuePct >= 0 ? '+' : '') + Number(r.wowRevenuePct).toFixed(2)}%</span>`
       : '<span class="td-na">--</span>';
     const wowRprPct = r.wowRprPct != null
-      ? '<span class="' + (r.wowRprPct >= 0 ? 'td-up' : 'td-down') + '">' + fmtPct(r.wowRprPct) + '</span>'
+      ? `<span class="${r.wowRprPct >= 0 ? 'td-up' : 'td-down'}">${(r.wowRprPct >= 0 ? '+' : '') + Number(r.wowRprPct).toFixed(2)}%</span>`
       : '<span class="td-na">--</span>';
 
+    const tr = document.createElement('tr');
     tr.innerHTML =
-      '<td>' + r.reportDate + '</td>' +
-      '<td>' + r.weekPeriod + '</td>' +
-      '<td>' + fmt$(r.total.revenue) + '</td>' +
-      '<td>' + fmt$(r.total.rpr) + '</td>' +
-      '<td>' + fmt$(r.campaigns.revenue) + '</td>' +
-      '<td>' + fmt$(r.campaigns.rpr) + '</td>' +
-      '<td>' + fmt$(r.flows.revenue) + '</td>' +
-      '<td>' + fmt$(r.flows.rpr) + '</td>' +
-      '<td>' + wowRevAbs + '</td>' +
-      '<td>' + wowRevPct + '</td>' +
-      '<td>' + wowRprPct + '</td>';
+      `<td>${r.reportDate}</td>` +
+      `<td>${r.weekPeriod}</td>` +
+      `<td>${r.storeRevenue ? f$(r.storeRevenue) : '<span class="td-na">--</span>'}</td>` +
+      `<td>${f$(r.total.revenue)}</td>` +
+      `<td>${attrPct}</td>` +
+      `<td>$${Number(r.total.rpr).toFixed(4)}</td>` +
+      `<td>${f$(r.campaigns.revenue)}</td>` +
+      `<td>${f$(r.flows.revenue)}</td>` +
+      `<td>${wowRev}</td>` +
+      `<td>${wowRevPct}</td>` +
+      `<td>${wowRprPct}</td>`;
     tbody.appendChild(tr);
   });
 }
